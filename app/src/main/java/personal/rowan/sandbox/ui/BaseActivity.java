@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui.activity;
+package personal.rowan.sandbox.ui;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.ActionBar;

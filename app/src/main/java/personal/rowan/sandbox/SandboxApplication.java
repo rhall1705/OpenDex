@@ -15,16 +15,23 @@ import personal.rowan.sandbox.network.PokemonService;
 public class SandboxApplication
         extends Application {
 
+    private static SandboxApplication sInstance;
+
     private NetworkComponent mNetworkComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        sInstance = this;
 
         mNetworkComponent = DaggerNetworkComponent.builder()
                 .appModule(new AppModule(this))
                 .pokeApiModule(new PokeApiModule(PokemonService.BASE_URL))
                 .build();
+    }
+
+    public static synchronized SandboxApplication getInstance() {
+        return sInstance;
     }
 
     public NetworkComponent networkComponent() {
