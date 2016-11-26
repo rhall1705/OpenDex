@@ -7,9 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import personal.rowan.sandbox.SandboxApplication;
-import personal.rowan.sandbox.dagger.component.NetworkComponent;
-
 /**
  * Created by Rowan Hall
  */
@@ -67,10 +64,6 @@ public abstract class BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    protected NetworkComponent networkComponent() {
-        return ((SandboxApplication) getApplication()).networkComponent();
     }
 
 }

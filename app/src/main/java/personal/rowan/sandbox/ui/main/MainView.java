@@ -8,7 +8,7 @@ import personal.rowan.sandbox.model.Result;
  * Created by Rowan Hall
  */
 
-public interface MainView {
+interface MainView {
 
     void displayData(List<Result> data);
 

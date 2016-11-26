@@ -4,8 +4,8 @@ import android.app.Application;
 
 import personal.rowan.sandbox.dagger.component.DaggerNetworkComponent;
 import personal.rowan.sandbox.dagger.component.NetworkComponent;
-import personal.rowan.sandbox.dagger.module.AppModule;
-import personal.rowan.sandbox.dagger.module.PokeApiModule;
+import personal.rowan.sandbox.dagger.module.ApplicationModule;
+import personal.rowan.sandbox.dagger.module.NetworkModule;
 import personal.rowan.sandbox.network.PokemonService;
 
 /**
@@ -17,16 +17,16 @@ public class SandboxApplication
 
     private static SandboxApplication sInstance;
 
-    private NetworkComponent mNetworkComponent;
+    private NetworkComponent mPokeApiComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance = this;
 
-        mNetworkComponent = DaggerNetworkComponent.builder()
-                .appModule(new AppModule(this))
-                .pokeApiModule(new PokeApiModule(PokemonService.BASE_URL))
+        mPokeApiComponent = DaggerNetworkComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .networkModule(new NetworkModule(PokemonService.BASE_URL))
                 .build();
     }
 
@@ -34,8 +34,8 @@ public class SandboxApplication
         return sInstance;
     }
 
-    public NetworkComponent networkComponent() {
-        return mNetworkComponent;
+    public NetworkComponent pokeApiComponent() {
+        return mPokeApiComponent;
     }
 
 }

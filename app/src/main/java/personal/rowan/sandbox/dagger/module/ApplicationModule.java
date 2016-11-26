@@ -8,11 +8,11 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class AppModule {
+public class ApplicationModule {
 
     private Application mApplication;
 
-    public AppModule(Application mApplication) {
+    public ApplicationModule(Application mApplication) {
         this.mApplication = mApplication;
     }
 
@@ -21,4 +21,5 @@ public class AppModule {
     Application provideApplication() {
         return mApplication;
     }
+
 }

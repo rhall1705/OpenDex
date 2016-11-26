@@ -8,6 +8,7 @@ import personal.rowan.sandbox.SandboxApplication;
 import personal.rowan.sandbox.model.PokemonList;
 import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.network.PokemonService;
+import personal.rowan.sandbox.ui.BasePresenter;
 import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Subscriber;
@@ -18,18 +19,19 @@ import rx.schedulers.Schedulers;
  * Created by Rowan Hall
  */
 
-public class MainPresenter {
+public class MainPresenter
+        extends BasePresenter<MainView> {
 
     @SuppressWarnings("WeakerAccess")
     @Inject
     Retrofit mRetrofit;
 
-    private MainView mView;
     private List<Result> mResults;
     private Throwable mError;
 
     MainPresenter() {
-        SandboxApplication.getInstance().networkComponent().inject(this);
+        super(MainView.class);
+        SandboxApplication.getInstance().pokeApiComponent().inject(this);
 
         PokemonService pokemonService = mRetrofit.create(PokemonService.class);
         Observable<PokemonList> pokemon = pokemonService.getAllPokemon();
@@ -57,19 +59,10 @@ public class MainPresenter {
                 });
     }
 
-    void attach(MainView view) {
-        mView = view;
-        publish();
-    }
-
-    void detach() {
-        mView = null;
-    }
-
-    private void publish() {
+    @Override
+    protected void publish() {
         if(mView != null) {
             if(mResults != null) {
-                mView.hideProgress();
                 mView.displayData(mResults);
             } else if(mError != null) {
                 mView.onError(mError);
@@ -77,6 +70,12 @@ public class MainPresenter {
                 mView.showProgress();
             }
         }
+    }
+
+    @Override
+    protected void onDestroyed() {
+        mResults = null;
+        mError = null;
     }
 
 }

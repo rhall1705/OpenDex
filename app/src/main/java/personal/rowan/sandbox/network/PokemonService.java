@@ -12,7 +12,7 @@ import rx.Observable;
 
 public interface PokemonService {
 
-    public static final String BASE_URL = "http://pokeapi.co/api/v2/";
+    String BASE_URL = "http://pokeapi.co/api/v2/";
 
     @GET("pokemon/")
     Observable<PokemonList> getAllPokemon();
