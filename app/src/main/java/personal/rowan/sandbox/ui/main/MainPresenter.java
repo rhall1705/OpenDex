@@ -12,6 +12,7 @@ import personal.rowan.sandbox.ui.BasePresenter;
 import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -26,6 +27,7 @@ public class MainPresenter
     @Inject
     Retrofit mRetrofit;
 
+    private Subscription mSubscription;
     private List<Result> mResults;
     private Throwable mError;
 
@@ -35,7 +37,7 @@ public class MainPresenter
 
         PokemonService pokemonService = mRetrofit.create(PokemonService.class);
         Observable<PokemonList> pokemon = pokemonService.getAllPokemon();
-        pokemon.subscribeOn(Schedulers.io())
+        mSubscription = pokemon.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PokemonList>() {
                     @Override
@@ -63,9 +65,9 @@ public class MainPresenter
     protected void publish() {
         if(mView != null) {
             if(mResults != null) {
-                mView.displayData(mResults);
+                mView.displayPokemonList(mResults);
             } else if(mError != null) {
-                mView.onError(mError);
+                mView.showErrorMessage(mError);
             } else {
                 mView.showProgress();
             }
@@ -74,6 +76,12 @@ public class MainPresenter
 
     @Override
     protected void onDestroyed() {
+        if(mSubscription != null) {
+            if(!mSubscription.isUnsubscribed()) {
+                mSubscription.unsubscribe();
+            }
+            mSubscription = null;
+        }
         mResults = null;
         mError = null;
     }

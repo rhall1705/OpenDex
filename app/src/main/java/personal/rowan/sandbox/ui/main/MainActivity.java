@@ -43,13 +43,13 @@ public class MainActivity
     }
 
     @Override
-    public void displayData(List<Result> data) {
+    public void displayPokemonList(List<Result> data) {
         hideProgress();
         mAdapter.setData(data);
     }
 
     @Override
-    public void onError(Throwable e) {
+    public void showErrorMessage(Throwable e) {
         hideProgress();
         showToastMessage(e.getMessage());
     }

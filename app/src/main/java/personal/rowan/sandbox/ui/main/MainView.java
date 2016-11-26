@@ -10,9 +10,9 @@ import personal.rowan.sandbox.model.Result;
 
 interface MainView {
 
-    void displayData(List<Result> data);
+    void displayPokemonList(List<Result> data);
 
-    void onError(Throwable e);
+    void showErrorMessage(Throwable e);
 
     void showProgress();
 
