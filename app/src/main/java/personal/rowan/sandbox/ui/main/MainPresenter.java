@@ -35,6 +35,10 @@ public class MainPresenter
         super(MainView.class);
         SandboxApplication.getInstance().pokeApiComponent().inject(this);
 
+        refreshData();
+    }
+
+    void refreshData() {
         PokemonService pokemonService = mRetrofit.create(PokemonService.class);
         Observable<PokemonList> pokemonList = pokemonService.getAllPokemon();
         mSubscription = pokemonList.subscribeOn(Schedulers.io())

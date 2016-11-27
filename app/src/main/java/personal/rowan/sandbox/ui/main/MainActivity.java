@@ -3,6 +3,7 @@ package personal.rowan.sandbox.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,9 +21,11 @@ import personal.rowan.sandbox.ui.detail.DetailActivity;
 
 public class MainActivity
         extends BasePresenterActivity<MainPresenter, MainView>
-        implements MainView, BaseRecyclerViewAdapter.OnItemClickListener {
+        implements MainView, BaseRecyclerViewAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
+    private MainPresenter mPresenter;
     private MainListAdapter mAdapter;
+    private SwipeRefreshLayout srlList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +42,25 @@ public class MainActivity
         pokemonList.setLayoutManager(new LinearLayoutManager(this));
         pokemonList.setAdapter(mAdapter = new MainListAdapter());
         mAdapter.setOnItemClickListener(this);
+
+        srlList = (SwipeRefreshLayout) findViewById(R.id.activity_main_srl);
+        srlList.setOnRefreshListener(this);
     }
 
     @NonNull
     @Override
     protected PresenterFactory<MainPresenter> getPresenterFactory() {
         return new MainPresenterFactory();
+    }
+
+    @Override
+    protected void onPresenterPrepared(@NonNull MainPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    protected void onPresenterDestroyed() {
+        mPresenter = null;
     }
 
     @Override
@@ -68,12 +84,12 @@ public class MainActivity
 
     @Override
     public void showProgress() {
-        showProgressDialog("Loading Pokemon", "This will only take a moment.");
+        srlList.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        dismissProgressDialog();
+        srlList.setRefreshing(false);
     }
 
     @Override
@@ -81,4 +97,10 @@ public class MainActivity
         navigateToPokemonDetail(mAdapter.getItem(position).getName());
         return true;
     }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.refreshData();
+    }
+
 }
