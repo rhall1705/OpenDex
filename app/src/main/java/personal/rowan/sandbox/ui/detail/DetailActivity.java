@@ -31,7 +31,7 @@ public class DetailActivity
     }
 
     private void setViews() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_tb);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_detail_tb);
         setToolbar(toolbar, "Pokemon Page", true);
 
         tvName = (TextView) findViewById(R.id.activity_detail_name_tv);
