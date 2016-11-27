@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui.adapter;
+package personal.rowan.sandbox.ui.base;
 
 import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,7 @@ public abstract class BaseViewHolder<T>
         extends RecyclerView.ViewHolder
         implements View.OnCreateContextMenuListener, View.OnClickListener {
 
-    private T mItem;
+    protected T mItem;
     protected BaseRecyclerViewAdapter<T> mAdapter;
 
     public BaseViewHolder(BaseRecyclerViewAdapter<T> adapter, View itemView) {
@@ -23,7 +23,7 @@ public abstract class BaseViewHolder<T>
 
     public abstract void onBindView(T item);
 
-    public void bindView(T item) {
+    void bindView(T item) {
         mItem = item;
         onBindView(mItem);
         itemView.setOnCreateContextMenuListener(mAdapter.isContextMenuEnabled() ? this : null);

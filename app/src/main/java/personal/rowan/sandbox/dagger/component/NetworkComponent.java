@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import personal.rowan.sandbox.dagger.module.ApplicationModule;
 import personal.rowan.sandbox.dagger.module.NetworkModule;
+import personal.rowan.sandbox.ui.detail.DetailPresenter;
 import personal.rowan.sandbox.ui.main.MainPresenter;
 
 /**
@@ -16,5 +17,6 @@ import personal.rowan.sandbox.ui.main.MainPresenter;
 public interface NetworkComponent {
 
     void inject(MainPresenter mainPresenter);
+    void inject(DetailPresenter detailPresenter);
 
 }

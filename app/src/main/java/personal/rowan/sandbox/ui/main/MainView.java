@@ -12,6 +12,8 @@ interface MainView {
 
     void displayPokemonList(List<Result> data);
 
+    void navigateToPokemonDetail(String item);
+
     void showErrorMessage(Throwable e);
 
     void showProgress();

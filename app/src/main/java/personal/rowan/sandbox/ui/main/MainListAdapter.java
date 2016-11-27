@@ -1,15 +1,17 @@
-package personal.rowan.sandbox.ui.adapter;
+package personal.rowan.sandbox.ui.main;
 
 import android.view.View;
 
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.model.Result;
+import personal.rowan.sandbox.ui.base.BaseRecyclerViewAdapter;
+import personal.rowan.sandbox.ui.base.BaseViewHolder;
 
 /**
  * Created by Rowan Hall
  */
 
-public class PokemonListAdapter
+class MainListAdapter
         extends BaseRecyclerViewAdapter<Result> {
 
     @Override
@@ -19,7 +21,7 @@ public class PokemonListAdapter
 
     @Override
     protected BaseViewHolder<Result> buildViewHolder(int viewType, View view) {
-        return new PokemonListViewHolder(this, view);
+        return new MainListViewHolder(this, view);
     }
 
 }

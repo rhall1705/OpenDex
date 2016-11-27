@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui;
+package personal.rowan.sandbox.ui.base.presenter;
 
 import android.content.Context;
 import android.support.v4.content.Loader;

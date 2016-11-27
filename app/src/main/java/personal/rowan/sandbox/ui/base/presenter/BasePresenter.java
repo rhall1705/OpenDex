@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui;
+package personal.rowan.sandbox.ui.base.presenter;
 
 import personal.rowan.sandbox.util.NullObject;
 

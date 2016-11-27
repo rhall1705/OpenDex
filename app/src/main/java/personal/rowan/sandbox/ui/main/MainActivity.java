@@ -1,24 +1,28 @@
 package personal.rowan.sandbox.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import java.util.List;
 
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.model.Result;
-import personal.rowan.sandbox.ui.BasePresenterActivity;
-import personal.rowan.sandbox.ui.PresenterFactory;
-import personal.rowan.sandbox.ui.adapter.PokemonListAdapter;
+import personal.rowan.sandbox.ui.base.BaseRecyclerViewAdapter;
+import personal.rowan.sandbox.ui.base.BaseViewHolder;
+import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
+import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
+import personal.rowan.sandbox.ui.detail.DetailActivity;
 
 public class MainActivity
         extends BasePresenterActivity<MainPresenter, MainView>
-        implements MainView {
+        implements MainView, BaseRecyclerViewAdapter.OnItemClickListener {
 
-    private PokemonListAdapter mAdapter;
+    private MainListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,8 @@ public class MainActivity
 
         RecyclerView pokemonList = (RecyclerView) findViewById(R.id.activity_main_rv);
         pokemonList.setLayoutManager(new LinearLayoutManager(this));
-        pokemonList.setAdapter(mAdapter = new PokemonListAdapter());
+        pokemonList.setAdapter(mAdapter = new MainListAdapter());
+        mAdapter.setOnItemClickListener(this);
     }
 
     @NonNull
@@ -46,6 +51,13 @@ public class MainActivity
     public void displayPokemonList(List<Result> data) {
         hideProgress();
         mAdapter.setData(data);
+    }
+
+    @Override
+    public void navigateToPokemonDetail(String item) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra(DetailActivity.ARGS_POKEMON_NAME, item);
+        startActivity(intent);
     }
 
     @Override
@@ -64,4 +76,9 @@ public class MainActivity
         dismissProgressDialog();
     }
 
+    @Override
+    public boolean onItemClick(BaseRecyclerViewAdapter adapter, BaseViewHolder holder, View adapterView, int position) {
+        navigateToPokemonDetail(mAdapter.getItem(position).getName());
+        return true;
+    }
 }

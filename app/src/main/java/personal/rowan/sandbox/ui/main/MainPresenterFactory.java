@@ -1,6 +1,6 @@
 package personal.rowan.sandbox.ui.main;
 
-import personal.rowan.sandbox.ui.PresenterFactory;
+import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
 
 /**
  * Created by Rowan Hall

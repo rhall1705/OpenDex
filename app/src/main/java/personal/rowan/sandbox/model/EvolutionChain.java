@@ -4,10 +4,9 @@ package personal.rowan.sandbox.model;
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
-public class Version {
+public class EvolutionChain {
 
     private String url;
-    private String name;
 
     /**
      * 
@@ -25,24 +24,6 @@ public class Version {
      */
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    /**
-     * 
-     * @return
-     *     The name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * 
-     * @param name
-     *     The name
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
 }

@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui;
+package personal.rowan.sandbox.ui.base.presenter;
 
 /**
  * Created by Rowan Hall

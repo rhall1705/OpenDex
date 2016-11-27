@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui.adapter;
+package personal.rowan.sandbox.ui.base;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,7 +26,7 @@ public abstract class BaseRecyclerViewAdapter<T>
     private int mContextSelectedPosition;
 
     public BaseRecyclerViewAdapter() {
-        this(new ArrayList<T>());
+        this(new ArrayList<>());
     }
 
     public BaseRecyclerViewAdapter(List<T> data) {
@@ -45,18 +45,8 @@ public abstract class BaseRecyclerViewAdapter<T>
     }
 
     private void assignClickListener(final BaseViewHolder<T> viewHolder) {
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                broadcastClick(viewHolder, viewHolder.getAdapterPosition());
-            }
-        });
-        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return broadcastLongClick(viewHolder, viewHolder.getAdapterPosition());
-            }
-        });
+        viewHolder.itemView.setOnClickListener(v -> broadcastClick(viewHolder, viewHolder.getAdapterPosition()));
+        viewHolder.itemView.setOnLongClickListener(v -> broadcastLongClick(viewHolder, viewHolder.getAdapterPosition()));
     }
 
     private void broadcastClick(BaseViewHolder<T> viewHolder, int position) {

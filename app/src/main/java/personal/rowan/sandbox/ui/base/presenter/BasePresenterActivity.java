@@ -1,9 +1,11 @@
-package personal.rowan.sandbox.ui;
+package personal.rowan.sandbox.ui.base.presenter;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+
+import personal.rowan.sandbox.ui.base.BaseActivity;
 
 /**
  * Created by Rowan Hall

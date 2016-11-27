@@ -1,7 +1,7 @@
 package personal.rowan.sandbox.network;
 
-import personal.rowan.sandbox.model.Pokemon;
 import personal.rowan.sandbox.model.PokemonList;
+import personal.rowan.sandbox.model.PokemonSpecies;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -17,7 +17,7 @@ public interface PokemonService {
     @GET("pokemon/")
     Observable<PokemonList> getAllPokemon();
 
-    @GET("pokemon/{parameter}/")
-    Observable<Pokemon> getPokemon(@Path("parameter") String parameter);
+    @GET("pokemon-species/{parameter}/")
+    Observable<PokemonSpecies> getPokemonSpecies(@Path("parameter") String parameter);
 
 }
