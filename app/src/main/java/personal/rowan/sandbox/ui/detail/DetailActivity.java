@@ -87,6 +87,7 @@ public class DetailActivity
     @Override
     public void abort() {
         showToastMessage("Pokemon data not found.");
+        finish();
     }
 
 }
