@@ -1,12 +1,10 @@
 package personal.rowan.sandbox.ui.detail;
 
-import javax.inject.Inject;
+import android.text.TextUtils;
 
-import personal.rowan.sandbox.SandboxApplication;
 import personal.rowan.sandbox.model.PokemonSpecies;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenter;
-import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -17,23 +15,28 @@ import rx.schedulers.Schedulers;
  * Created by Rowan Hall
  */
 
-public class DetailPresenter
+class DetailPresenter
         extends BasePresenter<DetailView> {
 
-    @SuppressWarnings("WeakerAccess")
-    @Inject
-    Retrofit mRetrofit;
-
+    private PokemonService mPokemonService;
+    private String mName;
     private Subscription mSubscription;
     private PokemonSpecies mResult;
     private Throwable mError;
 
-    DetailPresenter(String name) {
+    DetailPresenter(PokemonService pokemonService) {
         super(DetailView.class);
-        SandboxApplication.getInstance().pokeApiComponent().inject(this);
+        mPokemonService = pokemonService;
+        mName = mView.getNameArgument();
+        if(TextUtils.isEmpty(mName)) {
+            mView.abort();
+        } else {
+            refreshData();
+        }
+    }
 
-        PokemonService pokemonService = mRetrofit.create(PokemonService.class);
-        Observable<PokemonSpecies> pokemon = pokemonService.getPokemonSpecies(name);
+    private void refreshData() {
+        Observable<PokemonSpecies> pokemon = mPokemonService.getPokemonSpecies(mName);
         mSubscription = pokemon.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PokemonSpecies>() {
@@ -69,6 +72,20 @@ public class DetailPresenter
                 mView.showProgress();
             }
         }
+    }
+
+    @Override
+    protected void onDestroyed() {
+        mPokemonService = null;
+        mName = null;
+        if(mSubscription != null) {
+            if(!mSubscription.isUnsubscribed()) {
+                mSubscription.unsubscribe();
+            }
+            mSubscription = null;
+        }
+        mResult = null;
+        mError = null;
     }
 
 }

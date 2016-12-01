@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui.main;
+package personal.rowan.sandbox.ui.main.recycler;
 
 import android.view.View;
 
@@ -11,7 +11,7 @@ import personal.rowan.sandbox.ui.base.BaseViewHolder;
  * Created by Rowan Hall
  */
 
-class MainListAdapter
+public class MainListAdapter
         extends BaseRecyclerViewAdapter<Result> {
 
     @Override

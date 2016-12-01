@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui.main;
+package personal.rowan.sandbox.ui.main.recycler;
 
 import android.view.View;
 import android.widget.TextView;

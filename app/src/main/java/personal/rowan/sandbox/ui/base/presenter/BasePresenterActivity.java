@@ -21,6 +21,7 @@ public abstract class BasePresenterActivity<P extends BasePresenter<V>, V>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        beforePresenterPrepared();
         getSupportLoaderManager().initLoader(loaderId(), null, new LoaderManager.LoaderCallbacks<P>() {
             @Override
             public final Loader<P> onCreateLoader(int id, Bundle args) {
@@ -59,6 +60,14 @@ public abstract class BasePresenterActivity<P extends BasePresenter<V>, V>
      */
     @NonNull
     protected abstract PresenterFactory<P> getPresenterFactory();
+
+    /**
+     * Hook for subclasses for before the {@link BasePresenter} is instantiated.
+     * Primarily used to construct or inject dependencies for the Presenter.
+     */
+    protected void beforePresenterPrepared() {
+
+    }
 
     /**
      * Hook for subclasses that deliver the {@link BasePresenter} before its View is attached.

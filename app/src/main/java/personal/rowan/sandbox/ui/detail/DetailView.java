@@ -8,6 +8,8 @@ import personal.rowan.sandbox.model.PokemonSpecies;
 
 interface DetailView {
 
+    String getNameArgument();
+
     void displayPokemon(PokemonSpecies data);
 
     void showErrorMessage(Throwable e);
@@ -15,5 +17,7 @@ interface DetailView {
     void showProgress();
 
     void hideProgress();
+
+    void abort();
 
 }

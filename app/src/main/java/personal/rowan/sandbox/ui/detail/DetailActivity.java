@@ -5,20 +5,28 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.model.PokemonSpecies;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
+import personal.rowan.sandbox.ui.detail.dagger.DetailComponent;
+import personal.rowan.sandbox.ui.detail.dagger.DetailScope;
 
 /**
  * Created by Rowan Hall
  */
 
+@DetailScope
 public class DetailActivity
         extends BasePresenterActivity<DetailPresenter, DetailView>
         implements DetailView {
 
     public static final String ARGS_POKEMON_NAME = "ARGS_POKEMON_NAME";
+
+    @Inject
+    DetailPresenterFactory mPresenterFactory;
 
     private TextView tvName;
     private TextView tvFlavor;
@@ -41,7 +49,17 @@ public class DetailActivity
     @NonNull
     @Override
     protected PresenterFactory<DetailPresenter> getPresenterFactory() {
-        return new DetailPresenterFactory(getIntent().getStringExtra(ARGS_POKEMON_NAME));
+        return mPresenterFactory;
+    }
+
+    @Override
+    protected void beforePresenterPrepared() {
+        DetailComponent.injector.call(this);
+    }
+
+    @Override
+    public String getNameArgument() {
+        return getIntent().getStringExtra(ARGS_POKEMON_NAME);
     }
 
     @Override
@@ -64,6 +82,11 @@ public class DetailActivity
     @Override
     public void hideProgress() {
         dismissProgressDialog();
+    }
+
+    @Override
+    public void abort() {
+        showToastMessage("Pokemon data not found.");
     }
 
 }

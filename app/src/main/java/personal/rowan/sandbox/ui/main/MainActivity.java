@@ -11,6 +11,8 @@ import android.view.View;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.ui.base.BaseRecyclerViewAdapter;
@@ -18,10 +20,17 @@ import personal.rowan.sandbox.ui.base.BaseViewHolder;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
 import personal.rowan.sandbox.ui.detail.DetailActivity;
+import personal.rowan.sandbox.ui.main.dagger.MainComponent;
+import personal.rowan.sandbox.ui.main.dagger.MainScope;
+import personal.rowan.sandbox.ui.main.recycler.MainListAdapter;
 
+@MainScope
 public class MainActivity
         extends BasePresenterActivity<MainPresenter, MainView>
         implements MainView, BaseRecyclerViewAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+
+    @Inject
+    MainPresenterFactory mPresenterFactory;
 
     private MainPresenter mPresenter;
     private MainListAdapter mAdapter;
@@ -50,7 +59,12 @@ public class MainActivity
     @NonNull
     @Override
     protected PresenterFactory<MainPresenter> getPresenterFactory() {
-        return new MainPresenterFactory();
+        return mPresenterFactory;
+    }
+
+    @Override
+    protected void beforePresenterPrepared() {
+        MainComponent.injector.call(this);
     }
 
     @Override
