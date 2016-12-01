@@ -36,13 +36,6 @@ public class MainActivity
     private MainListAdapter mAdapter;
     private SwipeRefreshLayout srlList;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setViews();
-    }
-
     private void setViews() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_tb);
         setToolbar(toolbar, "Pokemon List");
@@ -64,7 +57,9 @@ public class MainActivity
 
     @Override
     protected void beforePresenterPrepared() {
+        setContentView(R.layout.activity_main);
         MainComponent.injector.call(this);
+        setViews();
     }
 
     @Override

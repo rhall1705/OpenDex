@@ -1,6 +1,5 @@
 package personal.rowan.sandbox.ui.detail;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
@@ -31,10 +30,16 @@ public class DetailActivity
     private TextView tvName;
     private TextView tvFlavor;
 
+    @NonNull
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected PresenterFactory<DetailPresenter> getPresenterFactory() {
+        return mPresenterFactory;
+    }
+
+    @Override
+    protected void beforePresenterPrepared() {
         setContentView(R.layout.activity_detail);
+        DetailComponent.injector.call(this);
         setViews();
     }
 
@@ -46,15 +51,9 @@ public class DetailActivity
         tvFlavor = (TextView) findViewById(R.id.activity_detail_flavor_tv);
     }
 
-    @NonNull
     @Override
-    protected PresenterFactory<DetailPresenter> getPresenterFactory() {
-        return mPresenterFactory;
-    }
-
-    @Override
-    protected void beforePresenterPrepared() {
-        DetailComponent.injector.call(this);
+    protected void onPresenterPrepared(@NonNull DetailPresenter presenter) {
+        presenter.refreshData(getNameArgument());
     }
 
     @Override

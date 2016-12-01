@@ -19,7 +19,6 @@ class DetailPresenter
         extends BasePresenter<DetailView> {
 
     private PokemonService mPokemonService;
-    private String mName;
     private Subscription mSubscription;
     private PokemonSpecies mResult;
     private Throwable mError;
@@ -27,16 +26,14 @@ class DetailPresenter
     DetailPresenter(PokemonService pokemonService) {
         super(DetailView.class);
         mPokemonService = pokemonService;
-        mName = mView.getNameArgument();
-        if(TextUtils.isEmpty(mName)) {
-            mView.abort();
-        } else {
-            refreshData();
-        }
     }
 
-    private void refreshData() {
-        Observable<PokemonSpecies> pokemon = mPokemonService.getPokemonSpecies(mName);
+    void refreshData(String name) {
+        if(TextUtils.isEmpty(name)) {
+            mView.abort();
+        }
+
+        Observable<PokemonSpecies> pokemon = mPokemonService.getPokemonSpecies(name);
         mSubscription = pokemon.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PokemonSpecies>() {
@@ -77,7 +74,6 @@ class DetailPresenter
     @Override
     protected void onDestroyed() {
         mPokemonService = null;
-        mName = null;
         if(mSubscription != null) {
             if(!mSubscription.isUnsubscribed()) {
                 mSubscription.unsubscribe();
