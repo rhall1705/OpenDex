@@ -1,9 +1,9 @@
 package personal.rowan.sandbox.ui.main.recycler;
 
+import android.databinding.DataBindingUtil;
 import android.view.View;
-import android.widget.TextView;
 
-import personal.rowan.sandbox.R;
+import personal.rowan.sandbox.databinding.ListitemPokemonBinding;
 import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.ui.base.BaseRecyclerViewAdapter;
 import personal.rowan.sandbox.ui.base.BaseViewHolder;
@@ -15,15 +15,15 @@ import personal.rowan.sandbox.ui.base.BaseViewHolder;
 class MainListViewHolder
         extends BaseViewHolder<Result> {
 
-    private TextView tvTitle;
+    private ListitemPokemonBinding mBinding;
 
     MainListViewHolder(BaseRecyclerViewAdapter<Result> adapter, View itemView) {
         super(adapter, itemView);
-        tvTitle = (TextView) itemView.findViewById(R.id.listitem_pokemon_title_tv);
+        mBinding = DataBindingUtil.bind(itemView);
     }
 
     @Override
     public void onBindView(Result item) {
-        tvTitle.setText(item.getName());
+        mBinding.listitemPokemonTitleTv.setText(item.getName());
     }
 }

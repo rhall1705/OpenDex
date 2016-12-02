@@ -46,7 +46,7 @@ public abstract class BaseViewHolder<T>
         }
     }
 
-    public void onItemClicked() {
+    void onItemClicked() {
         if(mAdapter.isContextMenuEnabled() && mAdapter.shouldContextMenuShowOnSingleClick()) {
             itemView.showContextMenu();
         }
@@ -58,7 +58,7 @@ public abstract class BaseViewHolder<T>
     }
 
     // Used in BaseRecyclerViewAdapter - override in viewholder impl
-    @SuppressWarnings("UnusedParameters")
+    @SuppressWarnings({"UnusedParameters", "WeakerAccess"})
     public void onChildItemClicked(View view) {
 
     }

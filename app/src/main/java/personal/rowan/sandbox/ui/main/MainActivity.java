@@ -1,12 +1,11 @@
 package personal.rowan.sandbox.ui.main;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import personal.rowan.sandbox.R;
+import personal.rowan.sandbox.databinding.ActivityMainBinding;
 import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.ui.base.BaseRecyclerViewAdapter;
 import personal.rowan.sandbox.ui.base.BaseViewHolder;
@@ -33,20 +33,19 @@ public class MainActivity
     MainPresenterFactory mPresenterFactory;
 
     private MainPresenter mPresenter;
+    private ActivityMainBinding mBinding;
     private MainListAdapter mAdapter;
-    private SwipeRefreshLayout srlList;
 
     private void setViews() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_tb);
-        setToolbar(toolbar, "Pokemon List");
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setToolbar(mBinding.activityMainTb, getString(R.string.activity_main_title));
 
-        RecyclerView pokemonList = (RecyclerView) findViewById(R.id.activity_main_rv);
+        RecyclerView pokemonList = mBinding.activityMainRv;
         pokemonList.setLayoutManager(new LinearLayoutManager(this));
         pokemonList.setAdapter(mAdapter = new MainListAdapter());
         mAdapter.setOnItemClickListener(this);
 
-        srlList = (SwipeRefreshLayout) findViewById(R.id.activity_main_srl);
-        srlList.setOnRefreshListener(this);
+        mBinding.activityMainSrl.setOnRefreshListener(this);
     }
 
     @NonNull
@@ -57,9 +56,8 @@ public class MainActivity
 
     @Override
     protected void beforePresenterPrepared() {
-        setContentView(R.layout.activity_main);
-        MainComponent.injector.call(this);
         setViews();
+        MainComponent.injector.call(this);
     }
 
     @Override
@@ -93,12 +91,12 @@ public class MainActivity
 
     @Override
     public void showProgress() {
-        srlList.setRefreshing(true);
+        mBinding.activityMainSrl.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        srlList.setRefreshing(false);
+        mBinding.activityMainSrl.setRefreshing(false);
     }
 
     @Override

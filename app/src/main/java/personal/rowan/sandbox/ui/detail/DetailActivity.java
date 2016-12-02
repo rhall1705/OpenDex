@@ -1,12 +1,12 @@
 package personal.rowan.sandbox.ui.detail;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import personal.rowan.sandbox.R;
+import personal.rowan.sandbox.databinding.ActivityDetailBinding;
 import personal.rowan.sandbox.model.PokemonSpecies;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
@@ -27,8 +27,7 @@ public class DetailActivity
     @Inject
     DetailPresenterFactory mPresenterFactory;
 
-    private TextView tvName;
-    private TextView tvFlavor;
+    private ActivityDetailBinding mBinding;
 
     @NonNull
     @Override
@@ -38,17 +37,13 @@ public class DetailActivity
 
     @Override
     protected void beforePresenterPrepared() {
-        setContentView(R.layout.activity_detail);
-        DetailComponent.injector.call(this);
         setViews();
+        DetailComponent.injector.call(this);
     }
 
     private void setViews() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_detail_tb);
-        setToolbar(toolbar, "Pokemon Page", true);
-
-        tvName = (TextView) findViewById(R.id.activity_detail_name_tv);
-        tvFlavor = (TextView) findViewById(R.id.activity_detail_flavor_tv);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+        setToolbar(mBinding.activityDetailTb, getString(R.string.activity_detail_title), true);
     }
 
     @Override
@@ -63,8 +58,8 @@ public class DetailActivity
 
     @Override
     public void displayPokemon(PokemonSpecies data) {
-        tvName.setText(data.getName());
-        tvFlavor.setText(data.getHabitat().getName());
+        mBinding.activityDetailNameTv.setText(data.getName());
+        mBinding.activityDetailFlavorTv.setText(data.getHabitat().getName());
     }
 
     @Override
@@ -75,7 +70,8 @@ public class DetailActivity
 
     @Override
     public void showProgress() {
-        showProgressDialog("Loading Pokemon Data", "This will only take a moment.");
+        showProgressDialog(getString(R.string.activity_detail_progress_title),
+                getString(R.string.activity_detail_progress_detail));
     }
 
     @Override
@@ -85,7 +81,7 @@ public class DetailActivity
 
     @Override
     public void abort() {
-        showToastMessage("Pokemon data not found.");
+        showToastMessage(getString(R.string.activity_detail_abort_message));
         finish();
     }
 
