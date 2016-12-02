@@ -3,9 +3,9 @@ package personal.rowan.sandbox.ui.main;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.List;
@@ -40,11 +40,11 @@ public class MainActivity
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         setToolbar(mBinding.activityMainTb, getString(R.string.activity_main_title));
 
-        RecyclerView pokemonList = mBinding.activityMainRv;
-        pokemonList.setLayoutManager(new LinearLayoutManager(this));
-        pokemonList.setAdapter(mAdapter = new MainListAdapter());
+        mBinding.activityMainRv.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.activityMainRv.setAdapter(mAdapter = new MainListAdapter());
         mAdapter.setOnItemClickListener(this);
 
+        mBinding.activityMainSrl.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
         mBinding.activityMainSrl.setOnRefreshListener(this);
     }
 

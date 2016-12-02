@@ -58,8 +58,7 @@ public class DetailActivity
 
     @Override
     public void displayPokemon(PokemonSpecies data) {
-        mBinding.activityDetailNameTv.setText(data.getName());
-        mBinding.activityDetailFlavorTv.setText(data.getHabitat().getName());
+        mBinding.setPokemonSpecies(data);
     }
 
     @Override

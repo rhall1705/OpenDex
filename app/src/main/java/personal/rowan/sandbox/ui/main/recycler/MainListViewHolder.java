@@ -24,6 +24,6 @@ class MainListViewHolder
 
     @Override
     public void onBindView(Result item) {
-        mBinding.listitemPokemonTitleTv.setText(item.getName());
+        mBinding.setResult(item);
     }
 }
