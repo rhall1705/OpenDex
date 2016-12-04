@@ -6,7 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+
+import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
 
 import java.util.List;
 
@@ -34,18 +38,23 @@ public class MainActivity
 
     private MainPresenter mPresenter;
     private ActivityMainBinding mBinding;
+
     private MainListAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     private void setViews() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         setToolbar(mBinding.activityMainTb, getString(R.string.activity_main_title));
 
-        mBinding.activityMainRv.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.activityMainRv.setAdapter(mAdapter = new MainListAdapter());
+        RecyclerView recyclerView = mBinding.activityMainRv;
+        recyclerView.setItemAnimator(null);
+        recyclerView.setLayoutManager(mLayoutManager = new LinearLayoutManager(this));
+        recyclerView.setAdapter(mAdapter = new MainListAdapter());
         mAdapter.setOnItemClickListener(this);
 
-        mBinding.activityMainSrl.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
-        mBinding.activityMainSrl.setOnRefreshListener(this);
+        SwipeRefreshLayout swipeRefreshLayout = mBinding.activityMainSrl;
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @NonNull
@@ -63,6 +72,7 @@ public class MainActivity
     @Override
     protected void onPresenterPrepared(@NonNull MainPresenter presenter) {
         mPresenter = presenter;
+        mPresenter.loadPager(RxRecyclerView.scrollEvents(mBinding.activityMainRv));
     }
 
     @Override
@@ -73,7 +83,12 @@ public class MainActivity
     @Override
     public void displayPokemonList(List<Result> data) {
         hideProgress();
-        mAdapter.setData(data);
+        List<Result> results = mAdapter.getData();
+        if(results == null || results.size() <= data.size()) {
+            mAdapter.setData(data);
+        } else {
+            mAdapter.insertData(data);
+        }
     }
 
     @Override
@@ -81,6 +96,17 @@ public class MainActivity
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(DetailActivity.ARGS_POKEMON_NAME, item);
         startActivity(intent);
+    }
+
+    @Override
+    public void checkForPagination() {
+        int lastVisiblePosition = mLayoutManager.findLastVisibleItemPosition();
+        int itemCount = mAdapter.getItemCount();
+        Log.d("pagination", "lastVisiblePosition = " + lastVisiblePosition + ", itemCount = " + itemCount);
+        if (mLayoutManager.findLastVisibleItemPosition() >= mAdapter.getItemCount() - 1) {
+            showProgress();
+            mPresenter.refreshData(mAdapter.getItemCount());
+        }
     }
 
     @Override
@@ -107,7 +133,7 @@ public class MainActivity
 
     @Override
     public void onRefresh() {
-        mPresenter.refreshData();
+        mPresenter.refreshData(null);
     }
 
 }

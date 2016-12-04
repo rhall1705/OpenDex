@@ -109,6 +109,12 @@ public abstract class BaseRecyclerViewAdapter<T>
         notifyItemInserted(getItemCount() - 1);
     }
 
+    public void insertData(List<T> data) {
+        int start = mData.size();
+        mData.addAll(data);
+        notifyItemRangeInserted(start, data.size());
+    }
+
     public void changeItemAtPosition(T item, int position) {
         mData.set(position, item);
         notifyItemChanged(position);

@@ -1,5 +1,7 @@
 package personal.rowan.sandbox.ui.main;
 
+import com.jakewharton.rxbinding.support.v7.widget.RecyclerViewScrollEvent;
+
 import java.util.List;
 
 import personal.rowan.sandbox.model.PokemonList;
@@ -8,9 +10,9 @@ import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenter;
 import rx.Observable;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Rowan Hall
@@ -20,7 +22,7 @@ class MainPresenter
         extends BasePresenter<MainView> {
 
     private PokemonService mPokemonService;
-    private Subscription mSubscription;
+    private CompositeSubscription mSubscription = new CompositeSubscription();
     private List<Result> mResults;
     private Throwable mError;
 
@@ -28,12 +30,13 @@ class MainPresenter
         super(MainView.class);
         mPokemonService = pokemonService;
 
-        refreshData();
+        refreshData(null);
     }
 
-    void refreshData() {
-        Observable<PokemonList> pokemonList = mPokemonService.getAllPokemon();
-        mSubscription = pokemonList.subscribeOn(Schedulers.io())
+    void refreshData(Integer offset) {
+        Observable<PokemonList> pokemonList = mPokemonService.getPokemonList(offset);
+        mSubscription.add(pokemonList
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PokemonList>() {
                     @Override
@@ -51,10 +54,23 @@ class MainPresenter
 
                     @Override
                     public void onNext(PokemonList pokemonList) {
-                        mResults = pokemonList.getResults();
+                        // If this is the first query, the response becomes the dataset
+                        // Otherwise, the response is appended to the dataset, likely due to pagination
+                        if(mResults == null || offset == null) {
+                            mResults = pokemonList.getResults();
+                        } else {
+                            mResults.addAll(pokemonList.getResults());
+                        }
                         publish();
                     }
-                });
+                }));
+    }
+
+    void loadPager(Observable<RecyclerViewScrollEvent> observable) {
+        mSubscription.add(observable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(scrollEvent -> mView.checkForPagination())
+        );
     }
 
     @Override
