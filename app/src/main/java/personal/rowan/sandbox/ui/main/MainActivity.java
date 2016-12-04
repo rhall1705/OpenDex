@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
@@ -72,7 +71,7 @@ public class MainActivity
     @Override
     protected void onPresenterPrepared(@NonNull MainPresenter presenter) {
         mPresenter = presenter;
-        mPresenter.loadPager(RxRecyclerView.scrollEvents(mBinding.activityMainRv));
+        mPresenter.bindRecyclerView(RxRecyclerView.scrollEvents(mBinding.activityMainRv));
     }
 
     @Override
@@ -100,9 +99,6 @@ public class MainActivity
 
     @Override
     public void checkForPagination() {
-        int lastVisiblePosition = mLayoutManager.findLastVisibleItemPosition();
-        int itemCount = mAdapter.getItemCount();
-        Log.d("pagination", "lastVisiblePosition = " + lastVisiblePosition + ", itemCount = " + itemCount);
         if (mLayoutManager.findLastVisibleItemPosition() >= mAdapter.getItemCount() - 1) {
             showProgress();
             mPresenter.refreshData(mAdapter.getItemCount());

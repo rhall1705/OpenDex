@@ -66,7 +66,7 @@ class MainPresenter
                 }));
     }
 
-    void loadPager(Observable<RecyclerViewScrollEvent> observable) {
+    void bindRecyclerView(Observable<RecyclerViewScrollEvent> observable) {
         mSubscription.add(observable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(scrollEvent -> mView.checkForPagination())
