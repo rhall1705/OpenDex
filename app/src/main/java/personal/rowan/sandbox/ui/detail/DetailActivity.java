@@ -2,6 +2,8 @@ package personal.rowan.sandbox.ui.detail;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import javax.inject.Inject;
 
@@ -20,13 +22,14 @@ import personal.rowan.sandbox.ui.detail.dagger.DetailScope;
 @DetailScope
 public class DetailActivity
         extends BasePresenterActivity<DetailPresenter, DetailView>
-        implements DetailView {
+        implements DetailView, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String ARGS_POKEMON_NAME = "ARGS_POKEMON_NAME";
 
     @Inject
     DetailPresenterFactory mPresenterFactory;
 
+    private DetailPresenter mPresenter;
     private ActivityDetailBinding mBinding;
 
     @NonNull
@@ -44,11 +47,16 @@ public class DetailActivity
     private void setViews() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         setToolbar(mBinding.activityDetailTb, getString(R.string.activity_detail_title), true);
+
+        SwipeRefreshLayout swipeRefreshLayout = mBinding.activityDetailSrl;
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
     protected void onPresenterPrepared(@NonNull DetailPresenter presenter) {
-        presenter.refreshData(getNameArgument());
+        mPresenter = presenter;
+        mPresenter.refreshData(getNameArgument());
     }
 
     @Override
@@ -69,19 +77,23 @@ public class DetailActivity
 
     @Override
     public void showProgress() {
-        showProgressDialog(getString(R.string.activity_detail_progress_title),
-                getString(R.string.activity_detail_progress_detail));
+        mBinding.activityDetailSrl.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        dismissProgressDialog();
+        mBinding.activityDetailSrl.setRefreshing(false);
     }
 
     @Override
     public void abort() {
         showToastMessage(getString(R.string.activity_detail_abort_message));
         finish();
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.refreshData(getNameArgument());
     }
 
 }

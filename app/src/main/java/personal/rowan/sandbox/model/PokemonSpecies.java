@@ -486,6 +486,10 @@ public class PokemonSpecies {
         this.pokedex_numbers = pokedexNumbers;
     }
 
+    public String getFormattedName() {
+        return PokemonUtil.capitalize(name);
+    }
+
     public String getDetailString() {
         return PokemonUtil.createDetailString(this);
     }

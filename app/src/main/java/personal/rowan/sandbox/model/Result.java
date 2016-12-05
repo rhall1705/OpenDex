@@ -4,6 +4,8 @@ package personal.rowan.sandbox.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import personal.rowan.sandbox.util.PokemonUtil;
+
 public class Result {
 
     private String url;
@@ -44,6 +46,10 @@ public class Result {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getFormattedName() {
+        return PokemonUtil.capitalize(name);
     }
 
     public Map<String, Object> getAdditionalProperties() {

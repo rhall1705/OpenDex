@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -7,44 +9,56 @@
             type="personal.rowan.sandbox.model.PokemonSpecies"/>
     </data>
 
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/activity_detail_srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/activity_detail_tb"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            style="@style/ToolbarStyle"/>
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/activity_detail_name_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textColor="@color/textColorPrimary"
-            android:textStyle="bold"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="16dp"
-            android:text="@{pokemonSpecies.name}"
-            tools:text="Bulbasaur"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/activity_detail_flavor_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/textColorPrimary"
-            android:textStyle="normal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:text="@{pokemonSpecies.detailString}"
-            tools:text="Grass/Poison"/>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/activity_detail_tb"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    style="@style/ToolbarStyle"/>
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/activity_detail_name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textColor="@color/textColorPrimary"
+                    android:textStyle="bold"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@{pokemonSpecies.formattedName}"
+                    tools:text="Bulbasaur"/>
+
+                <TextView
+                    android:id="@+id/activity_detail_flavor_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/textColorPrimary"
+                    android:textStyle="normal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp"
+                    android:text="@{pokemonSpecies.detailString}"
+                    tools:text="Grass/Poison"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </layout>

@@ -11,6 +11,7 @@ import personal.rowan.sandbox.model.Habitat;
 import personal.rowan.sandbox.model.Language_;
 import personal.rowan.sandbox.model.PokemonSpecies;
 import personal.rowan.sandbox.model.Shape;
+import personal.rowan.sandbox.model.Version;
 
 /**
  * Created by Rowan Hall
@@ -87,10 +88,14 @@ public class PokemonUtil {
 
         List<FlavorTextEntry> flavorTextEntries = getEnglishFlavorTextEntries(pokemon);
         if(!flavorTextEntries.isEmpty()) {
-            b.append("\nFlavor: \n");
+            b.append("\n\nFlavor: \n\n");
             for(FlavorTextEntry flavorTextEntry : flavorTextEntries) {
-                b.append(flavorTextEntry.getFlavorText())
-                        .append("\n\n");
+                Version version = flavorTextEntry.getVersion();
+                if(version != null) {
+                    b.append(capitalize(version.getName())).append("\n")
+                            .append(flavorTextEntry.getFlavorText().replace("\n", ""))
+                            .append("\n\n");
+                }
             }
         }
 
@@ -108,6 +113,12 @@ public class PokemonUtil {
             }
         }
         return englishEntries;
+    }
+
+    public static String capitalize(String string) {
+        if(string == null || string.isEmpty()) return string;
+        if(string.length() == 1) return string.toUpperCase();
+        return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
     }
 
 }
