@@ -14,7 +14,7 @@ interface MainView {
 
     void navigateToPokemonDetail(String item);
 
-    void checkForPagination();
+    boolean shouldPaginate();
 
     void showErrorMessage(Throwable e);
 

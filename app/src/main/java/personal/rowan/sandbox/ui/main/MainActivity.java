@@ -82,12 +82,7 @@ public class MainActivity
     @Override
     public void displayPokemonList(List<Result> data) {
         hideProgress();
-        List<Result> results = mAdapter.getData();
-        if(results == null || results.size() <= data.size()) {
-            mAdapter.setData(data);
-        } else {
-            mAdapter.insertData(data);
-        }
+        mAdapter.paginateData(data);
     }
 
     @Override
@@ -98,11 +93,8 @@ public class MainActivity
     }
 
     @Override
-    public void checkForPagination() {
-        if (mLayoutManager.findLastVisibleItemPosition() >= mAdapter.getItemCount() - 1) {
-            showProgress();
-            mPresenter.refreshData(mAdapter.getItemCount());
-        }
+    public boolean shouldPaginate() {
+        return mLayoutManager.findLastVisibleItemPosition() >= mAdapter.getItemCount() - 1;
     }
 
     @Override

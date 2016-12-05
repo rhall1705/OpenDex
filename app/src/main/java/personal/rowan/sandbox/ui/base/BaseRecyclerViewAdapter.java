@@ -88,7 +88,7 @@ public abstract class BaseRecyclerViewAdapter<T>
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData != null ? mData.size() : 0;
     }
 
     public List<T> getData() {
@@ -109,12 +109,6 @@ public abstract class BaseRecyclerViewAdapter<T>
         notifyItemInserted(getItemCount() - 1);
     }
 
-    public void insertData(List<T> data) {
-        int start = mData.size();
-        mData.addAll(data);
-        notifyItemRangeInserted(start, data.size());
-    }
-
     public void changeItemAtPosition(T item, int position) {
         mData.set(position, item);
         notifyItemChanged(position);
@@ -124,6 +118,17 @@ public abstract class BaseRecyclerViewAdapter<T>
         if(position >= 0 && position < getItemCount()) {
             mData.remove(position);
             notifyItemRemoved(position);
+        }
+    }
+
+    public void paginateData(List<T> data) {
+        if(mData == null || mData.isEmpty()) {
+            mData = data;
+            notifyDataSetChanged();
+        } else {
+            int originalSize = getItemCount();
+            mData = data;
+            notifyItemRangeInserted(originalSize, data.size());
         }
     }
 

@@ -2,14 +2,12 @@ package personal.rowan.sandbox.ui.main;
 
 import com.jakewharton.rxbinding.support.v7.widget.RecyclerViewScrollEvent;
 
-import java.util.List;
-
 import personal.rowan.sandbox.model.PokemonList;
-import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenter;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -22,8 +20,9 @@ class MainPresenter
         extends BasePresenter<MainView> {
 
     private PokemonService mPokemonService;
-    private CompositeSubscription mSubscription = new CompositeSubscription();
-    private List<Result> mResults;
+    private Subscription mApiSubscription;
+    private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
+    private PokemonList mResult;
     private Throwable mError;
 
     MainPresenter(PokemonService pokemonService) {
@@ -34,8 +33,12 @@ class MainPresenter
     }
 
     void refreshData(Integer offset) {
+        if(isApiSubscriptionActive()) {
+            return;
+        }
+
         Observable<PokemonList> pokemonList = mPokemonService.getPokemonList(offset);
-        mSubscription.add(pokemonList
+        mCompositeSubscription.add(mApiSubscription = pokemonList
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PokemonList>() {
@@ -56,10 +59,10 @@ class MainPresenter
                     public void onNext(PokemonList pokemonList) {
                         // If this is the first query, the response becomes the dataset
                         // Otherwise, the response is appended to the dataset, likely due to pagination
-                        if(mResults == null || offset == null) {
-                            mResults = pokemonList.getResults();
+                        if(mResult == null || offset == null) {
+                            mResult = pokemonList;
                         } else {
-                            mResults.addAll(pokemonList.getResults());
+                            mResult.getResults().addAll(pokemonList.getResults());
                         }
                         publish();
                     }
@@ -67,17 +70,28 @@ class MainPresenter
     }
 
     void bindRecyclerView(Observable<RecyclerViewScrollEvent> observable) {
-        mSubscription.add(observable
+        mCompositeSubscription.add(observable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(scrollEvent -> mView.checkForPagination())
+                .subscribe(scrollEvent -> {
+                    if(mView.shouldPaginate() &&
+                            !isApiSubscriptionActive()
+                            && mResult.getResults().size() < mResult.getCount()) {
+                        mView.showProgress();
+                        refreshData(mResult.getResults().size());
+                    }
+                })
         );
+    }
+
+    private boolean isApiSubscriptionActive() {
+        return mApiSubscription != null && !mApiSubscription.isUnsubscribed();
     }
 
     @Override
     protected void publish() {
         if(mView != null) {
-            if(mResults != null) {
-                mView.displayPokemonList(mResults);
+            if(mResult != null) {
+                mView.displayPokemonList(mResult.getResults());
             } else if(mError != null) {
                 mView.showErrorMessage(mError);
             } else {
@@ -89,13 +103,14 @@ class MainPresenter
     @Override
     protected void onDestroyed() {
         mPokemonService = null;
-        if(mSubscription != null) {
-            if(!mSubscription.isUnsubscribed()) {
-                mSubscription.unsubscribe();
+        if(mCompositeSubscription != null) {
+            if(!mCompositeSubscription.isUnsubscribed()) {
+                mCompositeSubscription.unsubscribe();
             }
-            mSubscription = null;
+            mCompositeSubscription = null;
         }
-        mResults = null;
+        mApiSubscription = null;
+        mResult = null;
         mError = null;
     }
 
