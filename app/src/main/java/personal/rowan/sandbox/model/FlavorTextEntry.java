@@ -7,7 +7,7 @@ import javax.annotation.Generated;
 public class FlavorTextEntry {
 
     private Version version;
-    private String flavorText;
+    private String flavor_text;
     private Language_ language;
 
     /**
@@ -31,10 +31,10 @@ public class FlavorTextEntry {
     /**
      * 
      * @return
-     *     The flavorText
+     *     The flavor_text
      */
     public String getFlavorText() {
-        return flavorText;
+        return flavor_text;
     }
 
     /**
@@ -43,7 +43,7 @@ public class FlavorTextEntry {
      *     The flavor_text
      */
     public void setFlavorText(String flavorText) {
-        this.flavorText = flavorText;
+        this.flavor_text = flavorText;
     }
 
     /**

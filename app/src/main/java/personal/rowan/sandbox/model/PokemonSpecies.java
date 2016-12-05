@@ -5,42 +5,44 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 
+import personal.rowan.sandbox.util.PokemonUtil;
+
 @Generated("org.jsonschema2pojo")
 public class PokemonSpecies {
 
-    private Integer captureRate;
+    private Integer capture_rate;
     private Habitat habitat;
     private Color color;
-    private Boolean formsSwitchable;
+    private Boolean forms_switchable;
     private Shape shape;
     private List<Name> names = new ArrayList<Name>();
     private Integer id;
-    private List<EggGroup> eggGroups = new ArrayList<EggGroup>();
-    private Integer baseHappiness;
+    private List<EggGroup> egg_groups = new ArrayList<EggGroup>();
+    private Integer base_happiness;
     private Generation generation;
-    private List<FlavorTextEntry> flavorTextEntries = new ArrayList<FlavorTextEntry>();
-    private GrowthRate growthRate;
-    private Integer hatchCounter;
+    private List<FlavorTextEntry> flavor_text_entries = new ArrayList<FlavorTextEntry>();
+    private GrowthRate growth_rate;
+    private Integer hatch_counter;
     private List<Genera> genera = new ArrayList<Genera>();
-    private Object evolvesFromSpecies;
-    private List<Object> formDescriptions = new ArrayList<Object>();
+    private Object evolves_from_species;
+    private List<Object> form_descriptions = new ArrayList<Object>();
     private List<Variety> varieties = new ArrayList<Variety>();
     private String name;
-    private EvolutionChain evolutionChain;
-    private Boolean hasGenderDifferences;
-    private Boolean isBaby;
-    private Integer genderRate;
-    private List<PalParkEncounter> palParkEncounters = new ArrayList<PalParkEncounter>();
+    private EvolutionChain evolution_chain;
+    private Boolean has_gender_differences;
+    private Boolean is_baby;
+    private Integer gender_rate;
+    private List<PalParkEncounter> pal_park_encounters = new ArrayList<PalParkEncounter>();
     private Integer order;
-    private List<PokedexNumber> pokedexNumbers = new ArrayList<PokedexNumber>();
+    private List<PokedexNumber> pokedex_numbers = new ArrayList<PokedexNumber>();
 
     /**
      * 
      * @return
-     *     The captureRate
+     *     The capture_rate
      */
     public Integer getCaptureRate() {
-        return captureRate;
+        return capture_rate;
     }
 
     /**
@@ -49,7 +51,7 @@ public class PokemonSpecies {
      *     The capture_rate
      */
     public void setCaptureRate(Integer captureRate) {
-        this.captureRate = captureRate;
+        this.capture_rate = captureRate;
     }
 
     /**
@@ -91,10 +93,10 @@ public class PokemonSpecies {
     /**
      * 
      * @return
-     *     The formsSwitchable
+     *     The forms_switchable
      */
     public Boolean getFormsSwitchable() {
-        return formsSwitchable;
+        return forms_switchable;
     }
 
     /**
@@ -103,7 +105,7 @@ public class PokemonSpecies {
      *     The forms_switchable
      */
     public void setFormsSwitchable(Boolean formsSwitchable) {
-        this.formsSwitchable = formsSwitchable;
+        this.forms_switchable = formsSwitchable;
     }
 
     /**
@@ -163,10 +165,10 @@ public class PokemonSpecies {
     /**
      * 
      * @return
-     *     The eggGroups
+     *     The egg_groups
      */
     public List<EggGroup> getEggGroups() {
-        return eggGroups;
+        return egg_groups;
     }
 
     /**
@@ -175,16 +177,16 @@ public class PokemonSpecies {
      *     The egg_groups
      */
     public void setEggGroups(List<EggGroup> eggGroups) {
-        this.eggGroups = eggGroups;
+        this.egg_groups = eggGroups;
     }
 
     /**
      * 
      * @return
-     *     The baseHappiness
+     *     The base_happiness
      */
     public Integer getBaseHappiness() {
-        return baseHappiness;
+        return base_happiness;
     }
 
     /**
@@ -193,7 +195,7 @@ public class PokemonSpecies {
      *     The base_happiness
      */
     public void setBaseHappiness(Integer baseHappiness) {
-        this.baseHappiness = baseHappiness;
+        this.base_happiness = baseHappiness;
     }
 
     /**
@@ -217,10 +219,10 @@ public class PokemonSpecies {
     /**
      * 
      * @return
-     *     The flavorTextEntries
+     *     The flavor_text_entries
      */
     public List<FlavorTextEntry> getFlavorTextEntries() {
-        return flavorTextEntries;
+        return flavor_text_entries;
     }
 
     /**
@@ -229,16 +231,16 @@ public class PokemonSpecies {
      *     The flavor_text_entries
      */
     public void setFlavorTextEntries(List<FlavorTextEntry> flavorTextEntries) {
-        this.flavorTextEntries = flavorTextEntries;
+        this.flavor_text_entries = flavorTextEntries;
     }
 
     /**
      * 
      * @return
-     *     The growthRate
+     *     The growth_rate
      */
     public GrowthRate getGrowthRate() {
-        return growthRate;
+        return growth_rate;
     }
 
     /**
@@ -247,16 +249,16 @@ public class PokemonSpecies {
      *     The growth_rate
      */
     public void setGrowthRate(GrowthRate growthRate) {
-        this.growthRate = growthRate;
+        this.growth_rate = growthRate;
     }
 
     /**
      * 
      * @return
-     *     The hatchCounter
+     *     The hatch_counter
      */
     public Integer getHatchCounter() {
-        return hatchCounter;
+        return hatch_counter;
     }
 
     /**
@@ -265,7 +267,7 @@ public class PokemonSpecies {
      *     The hatch_counter
      */
     public void setHatchCounter(Integer hatchCounter) {
-        this.hatchCounter = hatchCounter;
+        this.hatch_counter = hatchCounter;
     }
 
     /**
@@ -289,10 +291,10 @@ public class PokemonSpecies {
     /**
      * 
      * @return
-     *     The evolvesFromSpecies
+     *     The evolves_from_species
      */
     public Object getEvolvesFromSpecies() {
-        return evolvesFromSpecies;
+        return evolves_from_species;
     }
 
     /**
@@ -301,16 +303,16 @@ public class PokemonSpecies {
      *     The evolves_from_species
      */
     public void setEvolvesFromSpecies(Object evolvesFromSpecies) {
-        this.evolvesFromSpecies = evolvesFromSpecies;
+        this.evolves_from_species = evolvesFromSpecies;
     }
 
     /**
      * 
      * @return
-     *     The formDescriptions
+     *     The form_descriptions
      */
     public List<Object> getFormDescriptions() {
-        return formDescriptions;
+        return form_descriptions;
     }
 
     /**
@@ -319,7 +321,7 @@ public class PokemonSpecies {
      *     The form_descriptions
      */
     public void setFormDescriptions(List<Object> formDescriptions) {
-        this.formDescriptions = formDescriptions;
+        this.form_descriptions = formDescriptions;
     }
 
     /**
@@ -361,10 +363,10 @@ public class PokemonSpecies {
     /**
      * 
      * @return
-     *     The evolutionChain
+     *     The evolution_chain
      */
     public EvolutionChain getEvolutionChain() {
-        return evolutionChain;
+        return evolution_chain;
     }
 
     /**
@@ -373,16 +375,16 @@ public class PokemonSpecies {
      *     The evolution_chain
      */
     public void setEvolutionChain(EvolutionChain evolutionChain) {
-        this.evolutionChain = evolutionChain;
+        this.evolution_chain = evolutionChain;
     }
 
     /**
      * 
      * @return
-     *     The hasGenderDifferences
+     *     The has_gender_differences
      */
     public Boolean getHasGenderDifferences() {
-        return hasGenderDifferences;
+        return has_gender_differences;
     }
 
     /**
@@ -391,16 +393,16 @@ public class PokemonSpecies {
      *     The has_gender_differences
      */
     public void setHasGenderDifferences(Boolean hasGenderDifferences) {
-        this.hasGenderDifferences = hasGenderDifferences;
+        this.has_gender_differences = hasGenderDifferences;
     }
 
     /**
      * 
      * @return
-     *     The isBaby
+     *     The is_baby
      */
     public Boolean getIsBaby() {
-        return isBaby;
+        return is_baby;
     }
 
     /**
@@ -409,16 +411,16 @@ public class PokemonSpecies {
      *     The is_baby
      */
     public void setIsBaby(Boolean isBaby) {
-        this.isBaby = isBaby;
+        this.is_baby = isBaby;
     }
 
     /**
      * 
      * @return
-     *     The genderRate
+     *     The gender_rate
      */
     public Integer getGenderRate() {
-        return genderRate;
+        return gender_rate;
     }
 
     /**
@@ -427,16 +429,16 @@ public class PokemonSpecies {
      *     The gender_rate
      */
     public void setGenderRate(Integer genderRate) {
-        this.genderRate = genderRate;
+        this.gender_rate = genderRate;
     }
 
     /**
      * 
      * @return
-     *     The palParkEncounters
+     *     The pal_park_encounters
      */
     public List<PalParkEncounter> getPalParkEncounters() {
-        return palParkEncounters;
+        return pal_park_encounters;
     }
 
     /**
@@ -445,7 +447,7 @@ public class PokemonSpecies {
      *     The pal_park_encounters
      */
     public void setPalParkEncounters(List<PalParkEncounter> palParkEncounters) {
-        this.palParkEncounters = palParkEncounters;
+        this.pal_park_encounters = palParkEncounters;
     }
 
     /**
@@ -469,10 +471,10 @@ public class PokemonSpecies {
     /**
      * 
      * @return
-     *     The pokedexNumbers
+     *     The pokedex_numbers
      */
     public List<PokedexNumber> getPokedexNumbers() {
-        return pokedexNumbers;
+        return pokedex_numbers;
     }
 
     /**
@@ -481,7 +483,11 @@ public class PokemonSpecies {
      *     The pokedex_numbers
      */
     public void setPokedexNumbers(List<PokedexNumber> pokedexNumbers) {
-        this.pokedexNumbers = pokedexNumbers;
+        this.pokedex_numbers = pokedexNumbers;
+    }
+
+    public String getDetailString() {
+        return PokemonUtil.createDetailString(this);
     }
 
 }
