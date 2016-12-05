@@ -487,7 +487,7 @@ public class PokemonSpecies {
     }
 
     public String getFormattedName() {
-        return PokemonUtil.capitalizeWord(name);
+        return PokemonUtil.formatName(name);
     }
 
     public String getDetailString() {

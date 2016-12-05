@@ -92,7 +92,7 @@ public class PokemonUtil {
             for(FlavorTextEntry flavorTextEntry : flavorTextEntries) {
                 Version version = flavorTextEntry.getVersion();
                 if(version != null) {
-                    b.append(capitalizeAllWords(version.getName().replace("-", " "))).append("\n")
+                    b.append(formatName(version.getName())).append("\n")
                             .append(flavorTextEntry.getFlavorText().replace("\n", " "))
                             .append("\n\n");
                 }
@@ -115,6 +115,10 @@ public class PokemonUtil {
         return englishEntries;
     }
 
+    public static String formatName(String name) {
+        return capitalizeAllWords(name.replace("-", " "));
+    }
+
     private static String capitalizeAllWords(String string) {
         StringBuilder b = new StringBuilder();
         String[] words = string.split(" ");
@@ -124,7 +128,7 @@ public class PokemonUtil {
         return b.toString();
     }
 
-    public static String capitalizeWord(String string) {
+    private static String capitalizeWord(String string) {
         if(string == null || string.isEmpty()) return string;
         if(string.length() == 1) return string.toUpperCase();
         return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();

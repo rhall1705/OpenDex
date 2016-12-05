@@ -49,7 +49,7 @@ public class Result {
     }
 
     public String getFormattedName() {
-        return PokemonUtil.capitalizeWord(name);
+        return PokemonUtil.formatName(name);
     }
 
     public Map<String, Object> getAdditionalProperties() {
