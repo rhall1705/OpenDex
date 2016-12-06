@@ -2,9 +2,9 @@ package personal.rowan.sandbox.ui.detail2.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.databinding.ViewDetailStatsCardBinding;
@@ -14,7 +14,7 @@ import personal.rowan.sandbox.model.pokemon.Pokemon;
  * Created by Rowan Hall
  */
 
-public class DetailStatsCardView extends CardView {
+public class DetailStatsCardView extends LinearLayout {
 
      ViewDetailStatsCardBinding mBinding;
 
