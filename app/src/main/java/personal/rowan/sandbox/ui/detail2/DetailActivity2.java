@@ -2,6 +2,9 @@ package personal.rowan.sandbox.ui.detail2;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 
 import com.squareup.picasso.Picasso;
 
@@ -23,7 +26,7 @@ import personal.rowan.sandbox.util.PokemonUtil;
 @DetailScope2
 public class DetailActivity2
         extends BasePresenterActivity<DetailPresenter2, DetailView2>
-        implements DetailView2 {
+        implements DetailView2, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String ARGS_POKEMON_NUMBER = "ARGS_POKEMON_NUMBER";
     public static final String ARGS_POKEMON_NAME = "ARGS_POKEMON_NAME";
@@ -50,6 +53,11 @@ public class DetailActivity2
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_2);
         String name = getNameArgument();
         setToolbar(mBinding.activityDetailTb, PokemonUtil.formatName(name), true);
+
+        SwipeRefreshLayout swipeRefreshLayout = mBinding.activityDetailSrl;
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         Picasso.with(this)
                 .load(PokemonUtil.buildPokmonUrl(name))
                 .into(mBinding.activityDetailHeaderIv);
@@ -84,17 +92,24 @@ public class DetailActivity2
 
     @Override
     public void showProgress() {
-
+        mBinding.activityDetailContentLl.setVisibility(View.GONE);
+        mBinding.activityDetailSrl.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-
+        mBinding.activityDetailContentLl.setVisibility(View.VISIBLE);
+        mBinding.activityDetailSrl.setRefreshing(false);
     }
 
     @Override
     public void abort() {
         showToastMessage(getString(R.string.activity_detail_abort_message));
         finish();
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.refreshData(getNumberArgument());
     }
 }
