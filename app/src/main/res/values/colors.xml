@@ -9,6 +9,7 @@
     <color name="whiteTransparent">#CCFFFFFF</color>
     <color name="gray">#808080</color>
     <color name="lightGray">#EEEEEE</color>
+    <color name="transparent">#00000000</color>
 
     <color name="backgroundColorPrimary">@color/lightGray</color>
     <color name="backgroundColorSecondary">@color/white</color>

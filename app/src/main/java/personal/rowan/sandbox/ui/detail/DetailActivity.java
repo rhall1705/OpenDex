@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.databinding.ActivityDetailBinding;
-import personal.rowan.sandbox.model.PokemonSpecies;
+import personal.rowan.sandbox.model.species.PokemonSpecies;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
 import personal.rowan.sandbox.ui.detail.dagger.DetailComponent;

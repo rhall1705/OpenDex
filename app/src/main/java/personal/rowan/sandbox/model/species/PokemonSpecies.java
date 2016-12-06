@@ -1,5 +1,5 @@
 
-package personal.rowan.sandbox.model;
+package personal.rowan.sandbox.model.species;
 
 import java.util.ArrayList;
 import java.util.List;

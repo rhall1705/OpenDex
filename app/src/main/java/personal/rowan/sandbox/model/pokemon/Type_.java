@@ -1,10 +1,8 @@
 
-package personal.rowan.sandbox.model;
+package personal.rowan.sandbox.model.pokemon;
 
-import javax.annotation.Generated;
 
-@Generated("org.jsonschema2pojo")
-public class Language__ {
+public class Type_ {
 
     private String url;
     private String name;

@@ -1,10 +1,10 @@
 
-package personal.rowan.sandbox.model;
+package personal.rowan.sandbox.model.species;
 
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
-public class Area {
+public class Language {
 
     private String url;
     private String name;

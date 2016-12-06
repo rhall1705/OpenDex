@@ -1,8 +1,10 @@
-package personal.rowan.sandbox.model;
 
-import personal.rowan.sandbox.util.PokemonUtil;
+package personal.rowan.sandbox.model.species;
 
-public class Result {
+import javax.annotation.Generated;
+
+@Generated("org.jsonschema2pojo")
+public class Habitat {
 
     private String url;
     private String name;
@@ -41,10 +43,6 @@ public class Result {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getFormattedName() {
-        return PokemonUtil.formatName(name);
     }
 
 }

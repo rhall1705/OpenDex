@@ -1,10 +1,10 @@
 
-package personal.rowan.sandbox.model;
+package personal.rowan.sandbox.model.species;
 
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
-public class Shape {
+public class Color {
 
     private String url;
     private String name;

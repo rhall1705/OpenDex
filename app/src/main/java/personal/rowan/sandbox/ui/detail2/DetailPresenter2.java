@@ -1,8 +1,6 @@
-package personal.rowan.sandbox.ui.detail;
+package personal.rowan.sandbox.ui.detail2;
 
-import android.text.TextUtils;
-
-import personal.rowan.sandbox.model.species.PokemonSpecies;
+import personal.rowan.sandbox.model.pokemon.Pokemon;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenter;
 import rx.Observable;
@@ -15,28 +13,28 @@ import rx.schedulers.Schedulers;
  * Created by Rowan Hall
  */
 
-class DetailPresenter
-        extends BasePresenter<DetailView> {
+public class DetailPresenter2
+        extends BasePresenter<DetailView2> {
 
     private PokemonService mPokemonService;
     private Subscription mSubscription;
-    private PokemonSpecies mResult;
+    private Pokemon mResult;
     private Throwable mError;
 
-    DetailPresenter(PokemonService pokemonService) {
-        super(DetailView.class);
+    DetailPresenter2(PokemonService pokemonService) {
+        super(DetailView2.class);
         mPokemonService = pokemonService;
     }
 
-    void refreshData(String name) {
-        if(TextUtils.isEmpty(name)) {
+    void refreshData(Integer number) {
+        if(number == null || number <= 0) {
             mView.abort();
         }
 
-        Observable<PokemonSpecies> pokemon = mPokemonService.getPokemonSpecies(name);
+        Observable<Pokemon> pokemon = mPokemonService.getPokemon(String.valueOf(number));
         mSubscription = pokemon.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PokemonSpecies>() {
+                .subscribe(new Subscriber<Pokemon>() {
                     @Override
                     public void onCompleted() {
                         if(mView != null) {
@@ -51,7 +49,7 @@ class DetailPresenter
                     }
 
                     @Override
-                    public void onNext(PokemonSpecies species) {
+                    public void onNext(Pokemon species) {
                         mResult = species;
                         publish();
                     }

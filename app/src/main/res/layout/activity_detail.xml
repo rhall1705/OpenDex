@@ -6,7 +6,7 @@
     <data>
         <variable
             name="pokemonSpecies"
-            type="personal.rowan.sandbox.model.PokemonSpecies"/>
+            type="personal.rowan.sandbox.model.species.PokemonSpecies"/>
     </data>
 
     <LinearLayout

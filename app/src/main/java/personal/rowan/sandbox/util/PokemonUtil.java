@@ -3,15 +3,16 @@ package personal.rowan.sandbox.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import personal.rowan.sandbox.model.Color;
-import personal.rowan.sandbox.model.EggGroup;
-import personal.rowan.sandbox.model.FlavorTextEntry;
-import personal.rowan.sandbox.model.GrowthRate;
-import personal.rowan.sandbox.model.Habitat;
-import personal.rowan.sandbox.model.Language_;
-import personal.rowan.sandbox.model.PokemonSpecies;
-import personal.rowan.sandbox.model.Shape;
-import personal.rowan.sandbox.model.Version;
+import personal.rowan.sandbox.model.pokemon.Pokemon;
+import personal.rowan.sandbox.model.species.Color;
+import personal.rowan.sandbox.model.species.EggGroup;
+import personal.rowan.sandbox.model.species.FlavorTextEntry;
+import personal.rowan.sandbox.model.species.GrowthRate;
+import personal.rowan.sandbox.model.species.Habitat;
+import personal.rowan.sandbox.model.species.Language_;
+import personal.rowan.sandbox.model.species.PokemonSpecies;
+import personal.rowan.sandbox.model.species.Shape;
+import personal.rowan.sandbox.model.species.Version;
 
 /**
  * Created by Rowan Hall
@@ -132,6 +133,12 @@ public class PokemonUtil {
         if(string == null || string.isEmpty()) return string;
         if(string.length() == 1) return string.toUpperCase();
         return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+    }
+
+    public static String buildPokmonUrl(String name) {
+        return "https://img.pokemondb.net/artwork/" +
+                name +
+                ".jpg";
     }
 
 }

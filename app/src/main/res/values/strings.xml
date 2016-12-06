@@ -6,4 +6,6 @@
     <string name="activity_detail_title">Pokemon Page</string>
     <string name="activity_detail_abort_message">Pokemon data not found.</string>
 
+    <string name="activity_detail_header_content_description">The image for the Pokemon</string>
+
 </resources>

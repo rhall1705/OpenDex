@@ -1,6 +1,6 @@
 package personal.rowan.sandbox.ui.detail;
 
-import personal.rowan.sandbox.model.PokemonSpecies;
+import personal.rowan.sandbox.model.species.PokemonSpecies;
 
 /**
  * Created by Rowan Hall

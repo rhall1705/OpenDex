@@ -1,5 +1,5 @@
 
-package personal.rowan.sandbox.model;
+package personal.rowan.sandbox.model.species;
 
 import javax.annotation.Generated;
 
