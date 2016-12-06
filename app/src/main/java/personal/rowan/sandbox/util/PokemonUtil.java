@@ -129,7 +129,7 @@ public class PokemonUtil {
         return b.toString();
     }
 
-    private static String capitalizeWord(String string) {
+    public static String capitalizeWord(String string) {
         if(string == null || string.isEmpty()) return string;
         if(string.length() == 1) return string.toUpperCase();
         return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();

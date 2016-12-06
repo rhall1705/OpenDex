@@ -8,7 +8,7 @@ import personal.rowan.sandbox.model.pokemon.Pokemon;
 
 public interface DetailView2 {
 
-    Integer getIndexArgument();
+    Integer getNumberArgument();
 
     String getNameArgument();
 

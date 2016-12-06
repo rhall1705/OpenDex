@@ -3,6 +3,8 @@ package personal.rowan.sandbox.model.pokemon;
 
 import java.util.List;
 
+import personal.rowan.sandbox.util.PokemonUtil;
+
 public class Pokemon {
 
     private List<Form> forms = null;
@@ -102,6 +104,10 @@ public class Pokemon {
         return weight;
     }
 
+    public String getWeightString() {
+        return String.valueOf(weight);
+    }
+
     /**
      * 
      * @param weight
@@ -163,6 +169,10 @@ public class Pokemon {
      */
     public void setLocation_area_encounters(String location_area_encounters) {
         this.location_area_encounters = location_area_encounters;
+    }
+
+    public String getHeightString() {
+        return String.valueOf(height);
     }
 
     /**
@@ -280,6 +290,18 @@ public class Pokemon {
      */
     public List<Type> getTypes() {
         return types;
+    }
+
+    public String getFormattedType() {
+        if(types == null || types.isEmpty()) {
+            return "";
+        }
+        String type1 = types.get(0).getType().getName();
+        if(types.size() <= 1) {
+            return PokemonUtil.capitalizeWord(type1);
+        } else {
+            return PokemonUtil.capitalizeWord(type1) + "/" + PokemonUtil.capitalizeWord(types.get(1).getType().getName());
+        }
     }
 
     /**

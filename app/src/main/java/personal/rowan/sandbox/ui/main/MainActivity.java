@@ -22,7 +22,7 @@ import personal.rowan.sandbox.ui.base.BaseRecyclerViewAdapter;
 import personal.rowan.sandbox.ui.base.BaseViewHolder;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
-import personal.rowan.sandbox.ui.detail.DetailActivity;
+import personal.rowan.sandbox.ui.detail2.DetailActivity2;
 import personal.rowan.sandbox.ui.main.dagger.MainComponent;
 import personal.rowan.sandbox.ui.main.dagger.MainScope;
 import personal.rowan.sandbox.ui.main.recycler.MainListAdapter;
@@ -86,9 +86,10 @@ public class MainActivity
     }
 
     @Override
-    public void navigateToPokemonDetail(String item) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(DetailActivity.ARGS_POKEMON_NAME, item);
+    public void navigateToPokemonDetail(String name, Integer number) {
+        Intent intent = new Intent(this, DetailActivity2.class);
+        intent.putExtra(DetailActivity2.ARGS_POKEMON_NUMBER, number + 1);
+        intent.putExtra(DetailActivity2.ARGS_POKEMON_NAME, name);
         startActivity(intent);
     }
 
@@ -115,7 +116,7 @@ public class MainActivity
 
     @Override
     public boolean onItemClick(BaseRecyclerViewAdapter adapter, BaseViewHolder holder, View adapterView, int position) {
-        navigateToPokemonDetail(mAdapter.getItem(position).getName());
+        navigateToPokemonDetail(mAdapter.getItem(position).getName(), position);
         return true;
     }
 

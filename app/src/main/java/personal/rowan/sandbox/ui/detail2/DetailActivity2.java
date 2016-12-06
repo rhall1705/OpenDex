@@ -58,11 +58,11 @@ public class DetailActivity2
     @Override
     protected void onPresenterPrepared(@NonNull DetailPresenter2 presenter) {
         mPresenter = presenter;
-        mPresenter.refreshData(getIndexArgument());
+        mPresenter.refreshData(getNumberArgument());
     }
 
     @Override
-    public Integer getIndexArgument() {
+    public Integer getNumberArgument() {
         return getIntent().getIntExtra(ARGS_POKEMON_NUMBER, -1);
     }
 

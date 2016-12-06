@@ -12,7 +12,7 @@ interface MainView {
 
     void displayPokemonList(List<Result> data);
 
-    void navigateToPokemonDetail(String item);
+    void navigateToPokemonDetail(String name, Integer number);
 
     boolean shouldPaginate();
 
