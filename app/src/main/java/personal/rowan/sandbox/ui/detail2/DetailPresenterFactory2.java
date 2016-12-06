@@ -11,7 +11,7 @@ import personal.rowan.sandbox.ui.detail2.dagger.DetailScope2;
  */
 
 @DetailScope2
-public class DetailPresenterFactory2
+class DetailPresenterFactory2
         implements PresenterFactory<DetailPresenter2> {
 
     private PokemonService mPokemonService;

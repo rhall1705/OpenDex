@@ -5,6 +5,7 @@
     <color name="colorAccent">@color/white</color>
 
     <color name="black">#000000</color>
+    <color name="blackTransparent">#CC000000</color>
     <color name="white">#FFFFFF</color>
     <color name="whiteTransparent">#CCFFFFFF</color>
     <color name="gray">#808080</color>
@@ -27,9 +28,6 @@
 
     <color name="colorTabBackground">@color/colorPrimary</color>
     <color name="colorTabIndicator">@color/white</color>
-
-    <color name="chatBubbleSelf">@color/white</color>
-    <color name="chatBubbleOther">@color/colorPrimary</color>
 
     <color name="colorSwipeRefresh">@color/colorPrimary</color>
 </resources>

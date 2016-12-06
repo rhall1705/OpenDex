@@ -2,6 +2,8 @@
 package personal.rowan.sandbox.model.pokemon;
 
 
+import personal.rowan.sandbox.util.PokemonUtil;
+
 public class Stat {
 
     private Stat_ stat;
@@ -60,6 +62,14 @@ public class Stat {
      */
     public void setBaseStat(Integer baseStat) {
         this.base_stat = baseStat;
+    }
+
+    public String getName() {
+        return PokemonUtil.formatName(stat.getName());
+    }
+
+    public String getBaseStatString() {
+        return String.valueOf(base_stat);
     }
 
 }

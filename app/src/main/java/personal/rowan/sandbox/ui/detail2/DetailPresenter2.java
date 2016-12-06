@@ -13,7 +13,7 @@ import rx.schedulers.Schedulers;
  * Created by Rowan Hall
  */
 
-public class DetailPresenter2
+class DetailPresenter2
         extends BasePresenter<DetailView2> {
 
     private PokemonService mPokemonService;

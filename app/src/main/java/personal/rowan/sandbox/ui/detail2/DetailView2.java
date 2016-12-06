@@ -6,7 +6,7 @@ import personal.rowan.sandbox.model.pokemon.Pokemon;
  * Created by Rowan Hall
  */
 
-public interface DetailView2 {
+interface DetailView2 {
 
     Integer getNumberArgument();
 

@@ -68,6 +68,30 @@ public class Pokemon {
         return stats;
     }
 
+    public Stat getSPD() {
+        return stats.get(0);
+    }
+
+    public Stat getSPDEF() {
+        return stats.get(1);
+    }
+
+    public Stat getSPATK() {
+        return stats.get(2);
+    }
+
+    public Stat getDEF() {
+        return stats.get(3);
+    }
+
+    public Stat getATK() {
+        return stats.get(4);
+    }
+
+    public Stat getHP() {
+        return stats.get(5);
+    }
+
     /**
      * 
      * @param stats
@@ -300,7 +324,7 @@ public class Pokemon {
         if(types.size() <= 1) {
             return PokemonUtil.capitalizeWord(type1);
         } else {
-            return PokemonUtil.capitalizeWord(type1) + "/" + PokemonUtil.capitalizeWord(types.get(1).getType().getName());
+            return PokemonUtil.capitalizeWord(types.get(1).getType().getName()) + "/" + PokemonUtil.capitalizeWord(type1);
         }
     }
 

@@ -7,5 +7,14 @@
     <string name="activity_detail_abort_message">Pokemon data not found.</string>
 
     <string name="activity_detail_header_content_description">The image for the Pokemon</string>
+    <string name="activity_detail_type_header">Type</string>
+    <string name="activity_detail_height_header">Height</string>
+    <string name="activity_detail_weight_header">Weight</string>
+    <string name="activity_detail_hp_header">HP</string>
+    <string name="activity_detail_atk_header">ATK</string>
+    <string name="activity_detail_def_header">DEF</string>
+    <string name="activity_detail_spatk_header">SP ATK</string>
+    <string name="activity_detail_spdef_header">SP DEF</string>
+    <string name="activity_detail_speed_header">SPEED</string>
 
 </resources>
