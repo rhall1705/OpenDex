@@ -21,26 +21,60 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
             android:layout_marginBottom="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="24sp"
-                android:text="@string/activity_detail_type_header"
-                android:textColor="@color/textColorPrimary"
-                android:id="@+id/textView2" />
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/activity_detail_type_tv"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:text="@string/activity_detail_type_header"
+                    android:textColor="@color/textColorPrimary"
+                    android:id="@+id/textView2" />
+
+                <TextView
+                    android:id="@+id/activity_detail_type_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColorPrimaryLight"
+                    android:text="@{pokemon.formattedType}"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="@color/textColorPrimaryLight"
-                android:text="@{pokemon.formattedType}"/>
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/textColorPrimary"
+                    android:text="@string/activity_detail_abilities_header"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColorPrimaryLight"
+                    android:text="@{pokemon.abilitiesString}"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

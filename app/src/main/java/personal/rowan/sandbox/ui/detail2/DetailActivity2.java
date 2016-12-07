@@ -82,6 +82,7 @@ public class DetailActivity2
     @Override
     public void displayPokemon(Pokemon data) {
         mBinding.setPokemon(data);
+        mBinding.activityDetailSpritesCardView.loadSprites(data);
     }
 
     @Override

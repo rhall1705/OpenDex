@@ -11,12 +11,9 @@ public class Pokemon {
     private List<Ability> abilities = null;
     private List<Stat> stats = null;
     private String name;
-    private Integer weight;
+    private Double weight;
     private Sprites sprites;
-    private List<Object> held_items = null;
-    private String location_area_encounters;
-    private Integer height;
-    private Boolean is_default;
+    private Double height;
     private Species species;
     private Integer id;
     private Integer order;
@@ -68,30 +65,6 @@ public class Pokemon {
         return stats;
     }
 
-    public Stat getSPD() {
-        return stats.get(0);
-    }
-
-    public Stat getSPDEF() {
-        return stats.get(1);
-    }
-
-    public Stat getSPATK() {
-        return stats.get(2);
-    }
-
-    public Stat getDEF() {
-        return stats.get(3);
-    }
-
-    public Stat getATK() {
-        return stats.get(4);
-    }
-
-    public Stat getHP() {
-        return stats.get(5);
-    }
-
     /**
      * 
      * @param stats
@@ -124,12 +97,8 @@ public class Pokemon {
      * @return
      *     The weight
      */
-    public Integer getWeight() {
+    public Double getWeight() {
         return weight;
-    }
-
-    public String getWeightString() {
-        return String.valueOf(weight);
     }
 
     /**
@@ -137,7 +106,7 @@ public class Pokemon {
      * @param weight
      *     The weight
      */
-    public void setWeight(Integer weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
@@ -162,49 +131,9 @@ public class Pokemon {
     /**
      * 
      * @return
-     *     The held_items
-     */
-    public List<Object> getHeldItems() {
-        return held_items;
-    }
-
-    /**
-     * 
-     * @param heldItems
-     *     The held_items
-     */
-    public void setHeldItems(List<Object> heldItems) {
-        this.held_items = heldItems;
-    }
-
-    /**
-     * 
-     * @return
-     *     The location_area_encounters
-     */
-    public String getLocation_area_encounters() {
-        return location_area_encounters;
-    }
-
-    /**
-     * 
-     * @param location_area_encounters
-     *     The location_area_encounters
-     */
-    public void setLocation_area_encounters(String location_area_encounters) {
-        this.location_area_encounters = location_area_encounters;
-    }
-
-    public String getHeightString() {
-        return String.valueOf(height);
-    }
-
-    /**
-     * 
-     * @return
      *     The height
      */
-    public Integer getHeight() {
+    public Double getHeight() {
         return height;
     }
 
@@ -213,26 +142,8 @@ public class Pokemon {
      * @param height
      *     The height
      */
-    public void setHeight(Integer height) {
+    public void setHeight(Double height) {
         this.height = height;
-    }
-
-    /**
-     * 
-     * @return
-     *     The is_default
-     */
-    public Boolean getIsDefault() {
-        return is_default;
-    }
-
-    /**
-     * 
-     * @param isDefault
-     *     The is_default
-     */
-    public void setIsDefault(Boolean isDefault) {
-        this.is_default = isDefault;
     }
 
     /**
@@ -316,6 +227,15 @@ public class Pokemon {
         return types;
     }
 
+    /**
+     * 
+     * @param types
+     *     The types
+     */
+    public void setTypes(List<Type> types) {
+        this.types = types;
+    }
+
     public String getFormattedType() {
         if(types == null || types.isEmpty()) {
             return "";
@@ -328,13 +248,55 @@ public class Pokemon {
         }
     }
 
-    /**
-     * 
-     * @param types
-     *     The types
-     */
-    public void setTypes(List<Type> types) {
-        this.types = types;
+    public String getWeightString() {
+        return String.valueOf(weight / 10) + " kg";
+    }
+
+    public String getHeightString() {
+        return String.valueOf(height / 10) + " m";
+    }
+
+    public String getAbilitiesString() {
+        if(abilities == null || abilities.isEmpty()) {
+            return "";
+        }
+        Ability ability1 = abilities.get(0);
+        if(abilities.size() == 1) {
+            return PokemonUtil.formatAbilityName(ability1);
+        } else {
+            StringBuilder b = new StringBuilder();
+            for(int i = abilities.size() - 1; i >= 0; i--) {
+                b.append(PokemonUtil.formatAbilityName(abilities.get(i)));
+                if(i > 0) {
+                    b.append("\n");
+                }
+            }
+            return b.toString();
+        }
+    }
+
+    public Stat getSPD() {
+        return stats.get(0);
+    }
+
+    public Stat getSPDEF() {
+        return stats.get(1);
+    }
+
+    public Stat getSPATK() {
+        return stats.get(2);
+    }
+
+    public Stat getDEF() {
+        return stats.get(3);
+    }
+
+    public Stat getATK() {
+        return stats.get(4);
+    }
+
+    public Stat getHP() {
+        return stats.get(5);
     }
 
 }

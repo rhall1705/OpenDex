@@ -17,7 +17,7 @@ import personal.rowan.sandbox.model.pokemon.Pokemon;
 public class DetailFlavorCardView
         extends LinearLayout {
 
-    ViewDetailFlavorCardBinding mBinding;
+    private ViewDetailFlavorCardBinding mBinding;
 
     public DetailFlavorCardView(Context context) {
         super(context);

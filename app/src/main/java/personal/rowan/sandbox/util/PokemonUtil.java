@@ -3,6 +3,7 @@ package personal.rowan.sandbox.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import personal.rowan.sandbox.model.pokemon.Ability;
 import personal.rowan.sandbox.model.pokemon.Pokemon;
 import personal.rowan.sandbox.model.species.Color;
 import personal.rowan.sandbox.model.species.EggGroup;
@@ -117,7 +118,12 @@ public class PokemonUtil {
     }
 
     public static String formatName(String name) {
-        return capitalizeAllWords(name.replace("-", " "));
+        return capitalizeAllWords(name.replace("-", " ").trim());
+    }
+
+    public static String formatAbilityName(Ability ability) {
+        String formattedName = formatName(ability.getAbility().getName());
+        return ability.getIsHidden() ? formattedName + " (H)" : formattedName;
     }
 
     private static String capitalizeAllWords(String string) {

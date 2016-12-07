@@ -16,7 +16,7 @@ import personal.rowan.sandbox.model.pokemon.Pokemon;
 
 public class DetailStatsCardView extends LinearLayout {
 
-     ViewDetailStatsCardBinding mBinding;
+    private ViewDetailStatsCardBinding mBinding;
 
     public DetailStatsCardView(Context context) {
         super(context);
