@@ -1,6 +1,8 @@
 
 package personal.rowan.sandbox.model.species;
 
+import android.text.SpannableStringBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
@@ -494,7 +496,7 @@ public class PokemonSpecies {
         return PokemonUtil.createDetailString(this);
     }
 
-    public String getPokedexEntriesString() {
+    public SpannableStringBuilder getPokedexEntriesString() {
         return PokemonUtil.getPokedexEntriesString(this);
     }
 

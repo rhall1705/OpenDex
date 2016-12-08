@@ -1,5 +1,11 @@
 package personal.rowan.sandbox.util;
 
+import android.graphics.Typeface;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,27 +94,28 @@ public class PokemonUtil {
                     .append("\n");
         }
 
-        b.append(getPokedexEntriesString(pokemon));
-
         return b.toString();
     }
 
-    public static String getPokedexEntriesString(PokemonSpecies pokemon) {
-        StringBuilder b = new StringBuilder();
+    public static SpannableStringBuilder getPokedexEntriesString(PokemonSpecies pokemon) {
+        SpannableStringBuilder b = new SpannableStringBuilder();
 
         List<FlavorTextEntry> flavorTextEntries = getEnglishFlavorTextEntries(pokemon);
         if(!flavorTextEntries.isEmpty()) {
             for(FlavorTextEntry flavorTextEntry : flavorTextEntries) {
                 Version version = flavorTextEntry.getVersion();
                 if(version != null) {
-                    b.append(formatName(version.getName())).append("\n")
+                    SpannableString name = new SpannableString(formatName(version.getName()));
+                    name.setSpan(new StyleSpan(Typeface.BOLD), 0, name.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    b.append(name)
+                            .append("\n")
                             .append(flavorTextEntry.getFlavorText().replace("\n", " "))
                             .append("\n\n");
                 }
             }
         }
 
-        return b.toString();
+        return b;
     }
 
     private static List<FlavorTextEntry> getEnglishFlavorTextEntries(PokemonSpecies pokemon) {
