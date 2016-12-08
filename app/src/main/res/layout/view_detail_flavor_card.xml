@@ -5,6 +5,9 @@
         <variable
             name="pokemon"
             type="personal.rowan.sandbox.model.pokemon.Pokemon"/>
+        <variable
+            name="pokemonSpecies"
+            type="personal.rowan.sandbox.model.species.PokemonSpecies"/>
     </data>
 
     <LinearLayout
@@ -15,7 +18,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="4dp"
-        android:padding="16dp"
+        android:animateLayoutChanges="true"
         android:elevation="2dp">
 
         <LinearLayout
@@ -23,7 +26,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:baselineAligned="false"
-            android:layout_marginBottom="16dp">
+            android:layout_margin="16dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -62,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/textColorPrimary"
                     android:text="@string/activity_detail_abilities_header"/>
 
@@ -82,7 +85,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -135,6 +141,62 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/activity_detail_pokedex_entries_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/textColorPrimary"
+                android:text="@string/activity_detail_pokedex_entries_header"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/activity_detail_pokedex_entries_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimaryLight"
+                android:text="@{pokemonSpecies.pokedexEntriesString}" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="bottom|end">
+        
+            <Button
+                android:id="@+id/activity_detail_load_flavor_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_detail_load_flavor_btn"
+                android:textColor="@color/textColorButtonFlat"
+                style="?attr/borderlessButtonStyle"/>
+
+            <ProgressBar
+                android:id="@+id/activity_detail_load_flavor_pb"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 

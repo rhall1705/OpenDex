@@ -13,11 +13,13 @@ import javax.inject.Inject;
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.databinding.ActivityDetail2Binding;
 import personal.rowan.sandbox.model.pokemon.Pokemon;
+import personal.rowan.sandbox.model.species.PokemonSpecies;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
 import personal.rowan.sandbox.ui.detail2.dagger.DetailComponent2;
 import personal.rowan.sandbox.ui.detail2.dagger.DetailScope2;
 import personal.rowan.sandbox.util.PokemonUtil;
+import rx.Observable;
 
 /**
  * Created by Rowan Hall
@@ -26,7 +28,7 @@ import personal.rowan.sandbox.util.PokemonUtil;
 @DetailScope2
 public class DetailActivity2
         extends BasePresenterActivity<DetailPresenter2, DetailView2>
-        implements DetailView2, SwipeRefreshLayout.OnRefreshListener {
+        implements DetailView2 {
 
     public static final String ARGS_POKEMON_NUMBER = "ARGS_POKEMON_NUMBER";
     public static final String ARGS_POKEMON_NAME = "ARGS_POKEMON_NAME";
@@ -56,7 +58,7 @@ public class DetailActivity2
 
         SwipeRefreshLayout swipeRefreshLayout = mBinding.activityDetailSrl;
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
-        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
 
         Picasso.with(this)
                 .load(PokemonUtil.buildPokemonUrl(name))
@@ -67,6 +69,7 @@ public class DetailActivity2
     protected void onPresenterPrepared(@NonNull DetailPresenter2 presenter) {
         mPresenter = presenter;
         mPresenter.refreshData(getNumberArgument());
+        mPresenter.bindPokedexEntriesButton(mBinding.activityDetailFlavorCardView.onPokedexEntriesClicked());
     }
 
     @Override
@@ -111,5 +114,21 @@ public class DetailActivity2
     @Override
     public void onRefresh() {
         mPresenter.refreshData(getNumberArgument());
+    }
+
+    @Override
+    public void displayPokedexEntry(PokemonSpecies data) {
+        mBinding.activityDetailFlavorCardView.onPokedexEntriesSuccess(data);
+    }
+
+    @Override
+    public void showPokedexEntryProgress() {
+        mBinding.activityDetailFlavorCardView.showPokedexEntriesProgress();
+    }
+
+    @Override
+    public void showPokedexEntryError(Throwable e) {
+        mBinding.activityDetailFlavorCardView.onPokedexEntriesFailure();
+        showToastMessage(e.getMessage());
     }
 }

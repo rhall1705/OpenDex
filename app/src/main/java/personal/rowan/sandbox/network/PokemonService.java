@@ -16,7 +16,7 @@ public interface PokemonService {
 
     String BASE_URL = "http://pokeapi.co/api/v2/";
 
-    @GET("pokemon/")
+    @GET("pokemon-species/")
     Observable<PokemonList> getPokemonList(@Query("offset") Integer offset);
 
     @GET("pokemon/{parameter}/")

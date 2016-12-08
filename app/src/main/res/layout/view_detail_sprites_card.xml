@@ -40,16 +40,16 @@
                 android:layout_width="0dp"
                 android:layout_height="102dp"
                 android:contentDescription="@string/activity_detail_front_sprite_content_description"
-                app:imageUrl="@{pokemon.sprites.frontDefault}"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                app:imageUrl="@{pokemon.sprites.frontDefault}"/>
 
             <ImageView
                 android:id="@+id/activity_detail_back_sprite_iv"
                 android:layout_width="0dp"
                 android:layout_height="102dp"
                 android:contentDescription="@string/activity_detail_back_sprite_content_description"
-                app:imageUrl="@{pokemon.sprites.backDefault}"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                app:imageUrl="@{pokemon.sprites.backDefault}"/>
 
         </LinearLayout>
 

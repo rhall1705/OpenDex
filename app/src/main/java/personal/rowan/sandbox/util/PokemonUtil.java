@@ -88,9 +88,16 @@ public class PokemonUtil {
                     .append("\n");
         }
 
+        b.append(getPokedexEntriesString(pokemon));
+
+        return b.toString();
+    }
+
+    public static String getPokedexEntriesString(PokemonSpecies pokemon) {
+        StringBuilder b = new StringBuilder();
+
         List<FlavorTextEntry> flavorTextEntries = getEnglishFlavorTextEntries(pokemon);
         if(!flavorTextEntries.isEmpty()) {
-            b.append("\nFlavor: \n\n");
             for(FlavorTextEntry flavorTextEntry : flavorTextEntries) {
                 Version version = flavorTextEntry.getVersion();
                 if(version != null) {

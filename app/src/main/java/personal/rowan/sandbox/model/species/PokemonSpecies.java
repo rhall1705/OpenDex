@@ -494,4 +494,8 @@ public class PokemonSpecies {
         return PokemonUtil.createDetailString(this);
     }
 
+    public String getPokedexEntriesString() {
+        return PokemonUtil.getPokedexEntriesString(this);
+    }
+
 }
