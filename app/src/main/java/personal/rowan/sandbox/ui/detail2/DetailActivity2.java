@@ -59,7 +59,7 @@ public class DetailActivity2
         swipeRefreshLayout.setOnRefreshListener(this);
 
         Picasso.with(this)
-                .load(PokemonUtil.buildPokmonUrl(name))
+                .load(PokemonUtil.buildPokemonUrl(name))
                 .into(mBinding.activityDetailHeaderIv);
     }
 
@@ -82,7 +82,6 @@ public class DetailActivity2
     @Override
     public void displayPokemon(Pokemon data) {
         mBinding.setPokemon(data);
-        mBinding.activityDetailSpritesCardView.loadSprites(data);
     }
 
     @Override

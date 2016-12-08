@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="pokemon"
+            type="personal.rowan.sandbox.model.pokemon.Pokemon"/>
+    </data>
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +40,7 @@
                 android:layout_width="0dp"
                 android:layout_height="102dp"
                 android:contentDescription="@string/activity_detail_front_sprite_content_description"
+                app:imageUrl="@{pokemon.sprites.frontDefault}"
                 android:layout_weight="1"/>
 
             <ImageView
@@ -40,6 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="102dp"
                 android:contentDescription="@string/activity_detail_back_sprite_content_description"
+                app:imageUrl="@{pokemon.sprites.backDefault}"
                 android:layout_weight="1"/>
 
         </LinearLayout>

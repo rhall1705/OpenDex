@@ -141,7 +141,7 @@ public class PokemonUtil {
         return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
     }
 
-    public static String buildPokmonUrl(String name) {
+    public static String buildPokemonUrl(String name) {
         return "https://img.pokemondb.net/artwork/" +
                 name +
                 ".jpg";

@@ -88,7 +88,8 @@
                         android:id="@+id/activity_detail_sprites_card_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp"
+                        app:pokemon="@{pokemon}"/>
 
                     <personal.rowan.sandbox.ui.detail2.view.DetailFlavorCardView
                         android:layout_width="match_parent"

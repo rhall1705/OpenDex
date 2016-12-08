@@ -6,12 +6,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-import com.squareup.picasso.Picasso;
-
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.databinding.ViewDetailSpritesCardBinding;
 import personal.rowan.sandbox.model.pokemon.Pokemon;
-import personal.rowan.sandbox.model.pokemon.Sprites;
 
 /**
  * Created by Rowan Hall
@@ -37,14 +34,8 @@ public class DetailSpritesCardView
         mBinding = DataBindingUtil.inflate(inflater, R.layout.view_detail_sprites_card, this, true);
     }
 
-    public void loadSprites(Pokemon pokemon) {
-        Sprites sprites = pokemon.getSprites();
-        Picasso picasso = Picasso.with(getContext());
-        picasso.load(sprites.getFrontDefault())
-                .into(mBinding.activityDetailFrontSpriteIv);
-        picasso.load(sprites.getBackDefault())
-                .into(mBinding.activityDetailBackSpriteIv);
-
+    public void setPokemon(Pokemon pokemon) {
+        mBinding.setPokemon(pokemon);
     }
 
 }
