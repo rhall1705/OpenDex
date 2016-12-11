@@ -9,6 +9,7 @@ import android.text.style.StyleSpan;
 import java.util.ArrayList;
 import java.util.List;
 
+import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.model.pokemon.Ability;
 import personal.rowan.sandbox.model.pokemon.Pokemon;
 import personal.rowan.sandbox.model.species.Color;
@@ -135,6 +136,14 @@ public class PokemonUtil {
         return capitalizeAllWords(name.replace("-", " ").trim());
     }
 
+    public static String formatNumber(Integer number) {
+        String numberString = String.valueOf(number);
+        while(numberString.length() < 3) {
+            numberString = "0" + numberString;
+        }
+        return "#" + numberString;
+    }
+
     public static String formatAbilityName(Ability ability) {
         String formattedName = formatName(ability.getAbility().getName());
         return ability.getIsHidden() ? formattedName + " (H)" : formattedName;
@@ -159,6 +168,12 @@ public class PokemonUtil {
         return "https://img.pokemondb.net/artwork/" +
                 name +
                 ".jpg";
+    }
+
+    public static void addNumbersToResults(List<Result> results, Integer offset) {
+        for(int i = 0; i < results.size(); i++) {
+            results.get(i).setNumber(offset + i + 1);
+        }
     }
 
 }

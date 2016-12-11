@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -41,21 +42,6 @@ public class MainActivity
     private MainListAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
-    private void setViews() {
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        setToolbar(mBinding.activityMainTb, getString(R.string.activity_main_title));
-
-        RecyclerView recyclerView = mBinding.activityMainRv;
-        recyclerView.setItemAnimator(null);
-        recyclerView.setLayoutManager(mLayoutManager = new LinearLayoutManager(this));
-        recyclerView.setAdapter(mAdapter = new MainListAdapter());
-        mAdapter.setOnItemClickListener(this);
-
-        SwipeRefreshLayout swipeRefreshLayout = mBinding.activityMainSrl;
-        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
-        swipeRefreshLayout.setOnRefreshListener(this);
-    }
-
     @NonNull
     @Override
     protected PresenterFactory<MainPresenter> getPresenterFactory() {
@@ -66,6 +52,22 @@ public class MainActivity
     protected void beforePresenterPrepared() {
         setViews();
         MainComponent.injector.call(this);
+    }
+
+    private void setViews() {
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setToolbar(mBinding.activityMainTb, getString(R.string.activity_main_title));
+
+        RecyclerView recyclerView = mBinding.activityMainRv;
+        recyclerView.setItemAnimator(null);
+        recyclerView.setLayoutManager(mLayoutManager = new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, mLayoutManager.getOrientation()));
+        recyclerView.setAdapter(mAdapter = new MainListAdapter());
+        mAdapter.setOnItemClickListener(this);
+
+        SwipeRefreshLayout swipeRefreshLayout = mBinding.activityMainSrl;
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -88,7 +90,7 @@ public class MainActivity
     @Override
     public void navigateToPokemonDetail(String name, Integer number) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(DetailActivity.ARGS_POKEMON_NUMBER, number + 1);
+        intent.putExtra(DetailActivity.ARGS_POKEMON_NUMBER, number);
         intent.putExtra(DetailActivity.ARGS_POKEMON_NAME, name);
         startActivity(intent);
     }
@@ -116,7 +118,8 @@ public class MainActivity
 
     @Override
     public boolean onItemClick(BaseRecyclerViewAdapter adapter, BaseViewHolder holder, View adapterView, int position) {
-        navigateToPokemonDetail(mAdapter.getItem(position).getName(), position);
+        Result item = mAdapter.getItem(position);
+        navigateToPokemonDetail(item.getName(), item.getNumber());
         return true;
     }
 

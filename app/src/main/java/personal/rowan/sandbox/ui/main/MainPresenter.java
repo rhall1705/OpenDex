@@ -5,6 +5,7 @@ import com.jakewharton.rxbinding.support.v7.widget.RecyclerViewScrollEvent;
 import personal.rowan.sandbox.model.PokemonList;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenter;
+import personal.rowan.sandbox.util.PokemonUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -60,8 +61,10 @@ class MainPresenter
                         // If this is the first query, the response becomes the dataset
                         // Otherwise, the response is appended to the dataset, likely due to pagination
                         if(mResult == null || offset == null) {
+                            PokemonUtil.addNumbersToResults(pokemonList.getResults(), 0);
                             mResult = pokemonList;
                         } else {
+                            PokemonUtil.addNumbersToResults(pokemonList.getResults(), offset);
                             mResult.getResults().addAll(pokemonList.getResults());
                         }
                         publish();

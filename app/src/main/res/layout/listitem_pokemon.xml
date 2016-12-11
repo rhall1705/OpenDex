@@ -9,17 +9,28 @@
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="16dp"
+        android:gravity="center_vertical"
         android:background="?attr/selectableItemBackground">
 
         <TextView
-            android:id="@+id/listitem_pokemon_title_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="16sp"
+            android:textColor="@color/textColorPrimaryLight"
+            android:text="@{result.formattedNumber}"
+            android:gravity="end"
+            android:layout_marginEnd="16dp"
+            tools:text="#001"/>
+
+        <TextView
+            android:id="@+id/listitem_pokemon_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
             android:textColor="@color/textColorPrimary"
             android:text="@{result.formattedName}"
             tools:text="Bulbasaur"/>

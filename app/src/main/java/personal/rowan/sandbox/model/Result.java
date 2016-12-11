@@ -6,6 +6,7 @@ public class Result {
 
     private String url;
     private String name;
+    private Integer number;
 
     /**
      * 
@@ -43,8 +44,20 @@ public class Result {
         this.name = name;
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
     public String getFormattedName() {
         return PokemonUtil.formatName(name);
+    }
+
+    public String getFormattedNumber() {
+        return PokemonUtil.formatNumber(number);
     }
 
 }
