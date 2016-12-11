@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui.detail2;
+package personal.rowan.sandbox.ui.detail;
 
 import personal.rowan.sandbox.model.pokemon.Pokemon;
 import personal.rowan.sandbox.model.species.PokemonSpecies;
@@ -8,8 +8,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -17,8 +15,8 @@ import rx.subscriptions.CompositeSubscription;
  * Created by Rowan Hall
  */
 
-class DetailPresenter2
-        extends BasePresenter<DetailView2> {
+class DetailPresenter
+        extends BasePresenter<DetailView> {
 
     private PokemonService mPokemonService;
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
@@ -30,8 +28,8 @@ class DetailPresenter2
     private PokemonSpecies mPokedexEntriesResult;
     private Throwable mPokedexEntriesError;
 
-    DetailPresenter2(PokemonService pokemonService) {
-        super(DetailView2.class);
+    DetailPresenter(PokemonService pokemonService) {
+        super(DetailView.class);
         mPokemonService = pokemonService;
     }
 

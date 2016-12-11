@@ -1,24 +1,24 @@
-package personal.rowan.sandbox.ui.detail2.dagger;
+package personal.rowan.sandbox.ui.detail.dagger;
 
 import dagger.Component;
 import personal.rowan.sandbox.application.App;
 import personal.rowan.sandbox.application.dagger.component.ApplicationComponent;
 import personal.rowan.sandbox.application.dagger.module.PokeApiModule;
-import personal.rowan.sandbox.ui.detail2.DetailActivity2;
+import personal.rowan.sandbox.ui.detail.DetailActivity;
 import rx.functions.Action1;
 
 /**
  * Created by Rowan Hall
  */
 
-@DetailScope2
+@DetailScope
 @Component(modules = { PokeApiModule.class }, dependencies = { ApplicationComponent.class })
-public interface DetailComponent2 {
+public interface DetailComponent {
 
-    void inject(DetailActivity2 detailActivity);
+    void inject(DetailActivity detailActivity);
 
-    Action1<DetailActivity2> injector = (activity) -> {
-        DaggerDetailComponent2
+    Action1<DetailActivity> injector = (activity) -> {
+        DaggerDetailComponent
                 .builder()
                 .applicationComponent(App.applicationComponent(activity))
                 .build()

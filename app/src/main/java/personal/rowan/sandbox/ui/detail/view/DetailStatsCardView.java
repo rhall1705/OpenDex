@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui.detail2.view;
+package personal.rowan.sandbox.ui.detail.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;

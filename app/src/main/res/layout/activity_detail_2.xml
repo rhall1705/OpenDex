@@ -84,20 +84,20 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <personal.rowan.sandbox.ui.detail2.view.DetailSpritesCardView
+                    <personal.rowan.sandbox.ui.detail.view.DetailSpritesCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         app:pokemon="@{pokemon}"/>
 
-                    <personal.rowan.sandbox.ui.detail2.view.DetailFlavorCardView
+                    <personal.rowan.sandbox.ui.detail.view.DetailFlavorCardView
                         android:id="@+id/activity_detail_flavor_card_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         app:pokemon="@{pokemon}"/>
 
-                    <personal.rowan.sandbox.ui.detail2.view.DetailStatsCardView
+                    <personal.rowan.sandbox.ui.detail.view.DetailStatsCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"

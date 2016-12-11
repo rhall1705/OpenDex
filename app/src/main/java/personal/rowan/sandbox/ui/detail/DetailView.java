@@ -1,14 +1,13 @@
-package personal.rowan.sandbox.ui.detail2;
+package personal.rowan.sandbox.ui.detail;
 
 import personal.rowan.sandbox.model.pokemon.Pokemon;
 import personal.rowan.sandbox.model.species.PokemonSpecies;
-import rx.Observable;
 
 /**
  * Created by Rowan Hall
  */
 
-interface DetailView2 {
+interface DetailView {
 
     Integer getNumberArgument();
 
