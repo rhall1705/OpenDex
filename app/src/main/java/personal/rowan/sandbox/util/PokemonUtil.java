@@ -171,9 +171,9 @@ public class PokemonUtil {
     }
 
     public static String buildPokemonModelUrl(String name) {
-        return "http://www.pokestadium.com/sprites/xy/" +
-                name.replace("-", "") +
-                ".gif";
+        return "https://img.pokemondb.net/sprites/x-y/normal/" +
+                name +
+                ".png";
     }
 
     public static void addNumbersToResults(List<Result> results, Integer offset) {
