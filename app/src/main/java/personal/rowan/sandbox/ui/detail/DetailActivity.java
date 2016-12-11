@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso;
 import javax.inject.Inject;
 
 import personal.rowan.sandbox.R;
-import personal.rowan.sandbox.databinding.ActivityDetail2Binding;
+import personal.rowan.sandbox.databinding.ActivityDetailBinding;
 import personal.rowan.sandbox.model.pokemon.Pokemon;
 import personal.rowan.sandbox.model.species.PokemonSpecies;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
@@ -36,7 +36,7 @@ public class DetailActivity
     DetailPresenterFactory mPresenterFactory;
 
     private DetailPresenter mPresenter;
-    private ActivityDetail2Binding mBinding;
+    private ActivityDetailBinding mBinding;
 
     @NonNull
     @Override
@@ -51,7 +51,7 @@ public class DetailActivity
     }
 
     private void setViews() {
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_2);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         String name = getNameArgument();
         setToolbar(mBinding.activityDetailTb, PokemonUtil.formatName(name), true);
 
@@ -60,7 +60,7 @@ public class DetailActivity
         swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
 
         Picasso.with(this)
-                .load(PokemonUtil.buildPokemonUrl(name))
+                .load(PokemonUtil.buildPokemonArtworkUrl(name))
                 .into(mBinding.activityDetailHeaderIv);
     }
 

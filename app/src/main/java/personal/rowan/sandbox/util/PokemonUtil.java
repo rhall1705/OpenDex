@@ -164,10 +164,16 @@ public class PokemonUtil {
         return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
     }
 
-    public static String buildPokemonUrl(String name) {
+    public static String buildPokemonArtworkUrl(String name) {
         return "https://img.pokemondb.net/artwork/" +
                 name +
                 ".jpg";
+    }
+
+    public static String buildPokemonModelUrl(String name) {
+        return "http://www.pokestadium.com/sprites/xy/" +
+                name.replace("-", "") +
+                ".gif";
     }
 
     public static void addNumbersToResults(List<Result> results, Integer offset) {

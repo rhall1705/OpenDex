@@ -15,7 +15,6 @@ public class BindingUtil {
     public static void loadImage(ImageView view, String url) {
         Picasso.with(view.getContext())
                 .load(url)
-                .noPlaceholder()
                 .into(view);
     }
 

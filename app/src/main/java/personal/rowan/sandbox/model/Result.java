@@ -60,4 +60,8 @@ public class Result {
         return PokemonUtil.formatNumber(number);
     }
 
+    public String getModelUrl() {
+        return PokemonUtil.buildPokemonModelUrl(name);
+    }
+
 }
