@@ -8,8 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 
-import com.squareup.picasso.Picasso;
-
 import javax.inject.Inject;
 
 import personal.rowan.sandbox.R;
@@ -20,7 +18,6 @@ import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
 import personal.rowan.sandbox.ui.detail.dagger.DetailComponent;
 import personal.rowan.sandbox.ui.detail.dagger.DetailScope;
-import personal.rowan.sandbox.util.PokemonUtil;
 
 /**
  * Created by Rowan Hall
@@ -54,19 +51,17 @@ public class DetailActivity
 
     private void setViews() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_2);
-        String name = getNameArgument();
-        //setToolbar(mBinding.activityDetailTb, PokemonUtil.formatName(name), true);
+        mBinding.setPreloadedPokemon(new PreloadedPokemon(getNameArgument()));
+
+        setToolbar(mBinding.activityDetailTb, "", false);
 
         SwipeRefreshLayout swipeRefreshLayout = mBinding.activityDetailSrl;
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
         swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
         swipeRefreshLayout.setEnabled(false);
 
-        Picasso.with(this)
-                .load(PokemonUtil.buildPokemonArtworkUrl(name))
-                .into(mBinding.activityDetailPlaceholderIv);
-
         mBinding.activityDetailAbl.addOnOffsetChangedListener(this);
+        startAlphaAnimation(mBinding.activityDetailTitleTv, 0, View.INVISIBLE);
     }
 
     @Override
