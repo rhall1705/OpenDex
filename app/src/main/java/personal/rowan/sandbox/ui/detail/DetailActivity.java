@@ -2,16 +2,18 @@ package personal.rowan.sandbox.ui.detail;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
 import personal.rowan.sandbox.R;
-import personal.rowan.sandbox.databinding.ActivityDetailBinding;
+import personal.rowan.sandbox.databinding.ActivityDetail2Binding;
 import personal.rowan.sandbox.model.pokemon.Pokemon;
 import personal.rowan.sandbox.model.species.PokemonSpecies;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
@@ -27,7 +29,7 @@ import personal.rowan.sandbox.util.PokemonUtil;
 @DetailScope
 public class DetailActivity
         extends BasePresenterActivity<DetailPresenter, DetailView>
-        implements DetailView {
+        implements DetailView, AppBarLayout.OnOffsetChangedListener {
 
     public static final String ARGS_POKEMON_NUMBER = "ARGS_POKEMON_NUMBER";
     public static final String ARGS_POKEMON_NAME = "ARGS_POKEMON_NAME";
@@ -36,7 +38,7 @@ public class DetailActivity
     DetailPresenterFactory mPresenterFactory;
 
     private DetailPresenter mPresenter;
-    private ActivityDetailBinding mBinding;
+    private ActivityDetail2Binding mBinding;
 
     @NonNull
     @Override
@@ -51,17 +53,20 @@ public class DetailActivity
     }
 
     private void setViews() {
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_2);
         String name = getNameArgument();
-        setToolbar(mBinding.activityDetailTb, PokemonUtil.formatName(name), true);
+        //setToolbar(mBinding.activityDetailTb, PokemonUtil.formatName(name), true);
 
         SwipeRefreshLayout swipeRefreshLayout = mBinding.activityDetailSrl;
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
         swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
+        swipeRefreshLayout.setEnabled(false);
 
         Picasso.with(this)
                 .load(PokemonUtil.buildPokemonArtworkUrl(name))
-                .into(mBinding.activityDetailHeaderIv);
+                .into(mBinding.activityDetailPlaceholderIv);
+
+        mBinding.activityDetailAbl.addOnOffsetChangedListener(this);
     }
 
     @Override
@@ -90,6 +95,7 @@ public class DetailActivity
     public void showErrorMessage(Throwable e) {
         hideProgress();
         showToastMessage(e.getMessage());
+        mBinding.activityDetailSrl.setEnabled(true);
     }
 
     @Override
@@ -130,4 +136,64 @@ public class DetailActivity
         mBinding.activityDetailFlavorCardView.onPokedexEntriesFailure();
         showToastMessage(e.getMessage());
     }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
+        int maxScroll = appBarLayout.getTotalScrollRange();
+        float percentage = (float) Math.abs(offset) / (float) maxScroll;
+
+        handleAlphaOnTitle(percentage);
+        handleToolbarTitleVisibility(percentage);
+    }
+
+    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
+    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
+    private static final int ALPHA_ANIMATIONS_DURATION              = 200;
+
+    private boolean mIsTheTitleVisible = false;
+    private boolean mIsTheTitleContainerVisible = true;
+
+    private void handleToolbarTitleVisibility(float percentage) {
+        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
+
+            if(!mIsTheTitleVisible) {
+                startAlphaAnimation(mBinding.activityDetailTitleTv, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                mIsTheTitleVisible = true;
+            }
+
+        } else {
+
+            if (mIsTheTitleVisible) {
+                startAlphaAnimation(mBinding.activityDetailTitleTv, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                mIsTheTitleVisible = false;
+            }
+        }
+    }
+
+    private void handleAlphaOnTitle(float percentage) {
+        if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
+            if(mIsTheTitleContainerVisible) {
+                startAlphaAnimation(mBinding.activityDetailTitleLl, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                mIsTheTitleContainerVisible = false;
+            }
+
+        } else {
+
+            if (!mIsTheTitleContainerVisible) {
+                startAlphaAnimation(mBinding.activityDetailTitleLl, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                mIsTheTitleContainerVisible = true;
+            }
+        }
+    }
+
+    public static void startAlphaAnimation (View v, long duration, int visibility) {
+        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
+                ? new AlphaAnimation(0f, 1f)
+                : new AlphaAnimation(1f, 0f);
+
+        alphaAnimation.setDuration(duration);
+        alphaAnimation.setFillAfter(true);
+        v.startAnimation(alphaAnimation);
+    }
+
 }
