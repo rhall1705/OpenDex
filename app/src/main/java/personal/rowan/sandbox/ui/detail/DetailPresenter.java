@@ -1,9 +1,14 @@
 package personal.rowan.sandbox.ui.detail;
 
+import java.util.List;
+
 import personal.rowan.sandbox.model.pokemon.Pokemon;
+import personal.rowan.sandbox.model.pokemon.Sprites;
+import personal.rowan.sandbox.model.pokemon.Stat;
 import personal.rowan.sandbox.model.species.PokemonSpecies;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenter;
+import personal.rowan.sandbox.util.PokemonUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -19,18 +24,25 @@ class DetailPresenter
         extends BasePresenter<DetailView> {
 
     private PokemonService mPokemonService;
+    private String mNameArgument;
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
-    private Pokemon mResult;
+    private DetailViewModel mViewModel;
     private Throwable mError;
 
     private Subscription mPokedexEntriesSubscription;
-    private PokemonSpecies mPokedexEntriesResult;
     private Throwable mPokedexEntriesError;
 
     DetailPresenter(PokemonService pokemonService) {
         super(DetailView.class);
         mPokemonService = pokemonService;
+    }
+
+    void setInitialData(String name) {
+        mNameArgument = name;
+        mViewModel = new DetailViewModel(PokemonUtil.formatName(name),
+                PokemonUtil.buildPokemonArtworkUrl(name),
+                PokemonUtil.buildPokemonModelUrl(name));
     }
 
     void refreshData(Integer number) {
@@ -58,7 +70,7 @@ class DetailPresenter
 
                     @Override
                     public void onNext(Pokemon result) {
-                        mResult = result;
+                        setValues(result);
                     }
                 }));
     }
@@ -70,7 +82,7 @@ class DetailPresenter
                         return;
                     }
 
-                    Observable<PokemonSpecies> species = mPokemonService.getPokemonSpecies(mResult.getName());
+                    Observable<PokemonSpecies> species = mPokemonService.getPokemonSpecies(mNameArgument);
                     mCompositeSubscription.add(mPokedexEntriesSubscription = species
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -92,7 +104,7 @@ class DetailPresenter
 
                                 @Override
                                 public void onNext(PokemonSpecies result) {
-                                    mPokedexEntriesResult = result;
+                                    mViewModel.setPokedexEntries(PokemonUtil.getPokedexEntriesString(result));
                                 }
                             })
                     );
@@ -107,16 +119,17 @@ class DetailPresenter
     @Override
     protected void publish() {
         if(mView != null) {
-            if(mResult != null) {
-                mView.displayPokemon(mResult);
-            } else if(mError != null) {
+            if(mViewModel != null) {
+                mView.bindViewModel(mViewModel);
+            }
+            if(mError != null) {
                 mView.showErrorMessage(mError);
-            } else {
+            } else if(mViewModel == null || !mViewModel.hasValues()){
                 mView.showProgress();
             }
 
-            if(mPokedexEntriesResult != null) {
-                mView.displayPokedexEntry(mPokedexEntriesResult);
+            if(mViewModel != null && mViewModel.hasPokedexEntries()) {
+                mView.onDisplayPokedexEntry();
             } else if(mPokedexEntriesError != null) {
                 mView.showPokedexEntryError(mPokedexEntriesError);
             } else if(isPokedexEntriesSubscriptionActive()){
@@ -128,15 +141,38 @@ class DetailPresenter
     @Override
     protected void onDestroyed() {
         mPokemonService = null;
+        mNameArgument = null;
         if(mCompositeSubscription != null) {
             if(!mCompositeSubscription.isUnsubscribed()) {
                 mCompositeSubscription.unsubscribe();
             }
             mCompositeSubscription = null;
         }
-        mPokedexEntriesSubscription = null;
-        mResult = null;
         mError = null;
+
+        mPokedexEntriesSubscription = null;
+        mPokedexEntriesError = null;
+
+        mViewModel = null;
+    }
+
+    private void setValues(Pokemon pokemon) {
+        String type = PokemonUtil.getFormattedType(pokemon.getTypes());
+        String weight = PokemonUtil.getFormattedWeight(pokemon.getWeight());
+        String height = PokemonUtil.getFormattedHeight(pokemon.getHeight());
+        String abilities = PokemonUtil.getFormattedAbilities(pokemon.getAbilities());
+        Sprites sprites = pokemon.getSprites();
+        List<Stat> stats = pokemon.getStats();
+        String HP = String.valueOf(stats.get(5).getBaseStat());
+        String ATK = String.valueOf(stats.get(4).getBaseStat());
+        String DEF = String.valueOf(stats.get(3).getBaseStat());
+        String SPATK = String.valueOf(stats.get(2).getBaseStat());
+        String SPDEF = String.valueOf(stats.get(1).getBaseStat());
+        String SPD = String.valueOf(stats.get(0).getBaseStat());
+
+        mViewModel.setValues(type, weight, height, abilities,
+                sprites.getFrontDefault(), sprites.getBackDefault(),
+                HP, ATK, DEF, SPATK, SPDEF, SPD);
     }
 
 }

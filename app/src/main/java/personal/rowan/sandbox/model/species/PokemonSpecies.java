@@ -1,13 +1,9 @@
 
 package personal.rowan.sandbox.model.species;
 
-import android.text.SpannableStringBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
-
-import personal.rowan.sandbox.util.PokemonUtil;
 
 @Generated("org.jsonschema2pojo")
 public class PokemonSpecies {
@@ -486,18 +482,6 @@ public class PokemonSpecies {
      */
     public void setPokedexNumbers(List<PokedexNumber> pokedexNumbers) {
         this.pokedex_numbers = pokedexNumbers;
-    }
-
-    public String getFormattedName() {
-        return PokemonUtil.formatName(name);
-    }
-
-    public String getDetailString() {
-        return PokemonUtil.createDetailString(this);
-    }
-
-    public SpannableStringBuilder getPokedexEntriesString() {
-        return PokemonUtil.getPokedexEntriesString(this);
     }
 
 }

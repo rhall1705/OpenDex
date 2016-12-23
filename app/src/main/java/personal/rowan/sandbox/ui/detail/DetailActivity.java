@@ -2,18 +2,15 @@ package personal.rowan.sandbox.ui.detail;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 
 import javax.inject.Inject;
 
 import personal.rowan.sandbox.R;
-import personal.rowan.sandbox.databinding.ActivityDetail2Binding;
-import personal.rowan.sandbox.model.pokemon.Pokemon;
-import personal.rowan.sandbox.model.species.PokemonSpecies;
+import personal.rowan.sandbox.databinding.ActivityDetailBinding;
+import personal.rowan.sandbox.ui.detail.coordinator.DetailOffsetChangedListener;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
 import personal.rowan.sandbox.ui.detail.dagger.DetailComponent;
@@ -26,7 +23,7 @@ import personal.rowan.sandbox.ui.detail.dagger.DetailScope;
 @DetailScope
 public class DetailActivity
         extends BasePresenterActivity<DetailPresenter, DetailView>
-        implements DetailView, AppBarLayout.OnOffsetChangedListener {
+        implements DetailView {
 
     public static final String ARGS_POKEMON_NUMBER = "ARGS_POKEMON_NUMBER";
     public static final String ARGS_POKEMON_NAME = "ARGS_POKEMON_NAME";
@@ -35,7 +32,7 @@ public class DetailActivity
     DetailPresenterFactory mPresenterFactory;
 
     private DetailPresenter mPresenter;
-    private ActivityDetail2Binding mBinding;
+    private ActivityDetailBinding mBinding;
 
     @NonNull
     @Override
@@ -50,23 +47,24 @@ public class DetailActivity
     }
 
     private void setViews() {
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_2);
-        mBinding.setPreloadedPokemon(new PreloadedPokemon(getNameArgument()));
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
         setToolbar(mBinding.activityDetailTb, "", false);
 
         SwipeRefreshLayout swipeRefreshLayout = mBinding.activityDetailSrl;
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
-        swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> mPresenter.refreshData(getNumberArgument()));
         swipeRefreshLayout.setEnabled(false);
 
-        mBinding.activityDetailAbl.addOnOffsetChangedListener(this);
-        startAlphaAnimation(mBinding.activityDetailTitleTv, 0, View.INVISIBLE);
+        new DetailOffsetChangedListener().bind(mBinding.activityDetailAbl,
+                        mBinding.activityDetailCollapsedTitleTv,
+                        mBinding.activityDetailExpandedTitleTv);
     }
 
     @Override
     protected void onPresenterPrepared(@NonNull DetailPresenter presenter) {
         mPresenter = presenter;
+        mPresenter.setInitialData(getNameArgument());
         mPresenter.refreshData(getNumberArgument());
         mPresenter.bindPokedexEntriesButton(mBinding.activityDetailFlavorCardView.onPokedexEntriesClicked());
     }
@@ -82,8 +80,8 @@ public class DetailActivity
     }
 
     @Override
-    public void displayPokemon(Pokemon data) {
-        mBinding.setPokemon(data);
+    public void bindViewModel(DetailViewModel viewModel) {
+        mBinding.setViewModel(viewModel);
     }
 
     @Override
@@ -112,13 +110,8 @@ public class DetailActivity
     }
 
     @Override
-    public void onRefresh() {
-        mPresenter.refreshData(getNumberArgument());
-    }
-
-    @Override
-    public void displayPokedexEntry(PokemonSpecies data) {
-        mBinding.activityDetailFlavorCardView.onPokedexEntriesSuccess(data);
+    public void onDisplayPokedexEntry() {
+        mBinding.activityDetailFlavorCardView.onPokedexEntriesSuccess();
     }
 
     @Override
@@ -130,65 +123,6 @@ public class DetailActivity
     public void showPokedexEntryError(Throwable e) {
         mBinding.activityDetailFlavorCardView.onPokedexEntriesFailure();
         showToastMessage(e.getMessage());
-    }
-
-    @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
-        int maxScroll = appBarLayout.getTotalScrollRange();
-        float percentage = (float) Math.abs(offset) / (float) maxScroll;
-
-        handleAlphaOnTitle(percentage);
-        handleToolbarTitleVisibility(percentage);
-    }
-
-    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
-    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
-    private static final int ALPHA_ANIMATIONS_DURATION              = 200;
-
-    private boolean mIsTheTitleVisible = false;
-    private boolean mIsTheTitleContainerVisible = true;
-
-    private void handleToolbarTitleVisibility(float percentage) {
-        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
-
-            if(!mIsTheTitleVisible) {
-                startAlphaAnimation(mBinding.activityDetailTitleTv, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-                mIsTheTitleVisible = true;
-            }
-
-        } else {
-
-            if (mIsTheTitleVisible) {
-                startAlphaAnimation(mBinding.activityDetailTitleTv, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-                mIsTheTitleVisible = false;
-            }
-        }
-    }
-
-    private void handleAlphaOnTitle(float percentage) {
-        if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
-            if(mIsTheTitleContainerVisible) {
-                startAlphaAnimation(mBinding.activityDetailTitleLl, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-                mIsTheTitleContainerVisible = false;
-            }
-
-        } else {
-
-            if (!mIsTheTitleContainerVisible) {
-                startAlphaAnimation(mBinding.activityDetailTitleLl, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-                mIsTheTitleContainerVisible = true;
-            }
-        }
-    }
-
-    public static void startAlphaAnimation (View v, long duration, int visibility) {
-        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
-                ? new AlphaAnimation(0f, 1f)
-                : new AlphaAnimation(1f, 0f);
-
-        alphaAnimation.setDuration(duration);
-        alphaAnimation.setFillAfter(true);
-        v.startAnimation(alphaAnimation);
     }
 
 }

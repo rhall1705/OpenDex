@@ -9,9 +9,8 @@ import android.text.style.StyleSpan;
 import java.util.ArrayList;
 import java.util.List;
 
-import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.model.pokemon.Ability;
-import personal.rowan.sandbox.model.pokemon.Pokemon;
+import personal.rowan.sandbox.model.pokemon.Type;
 import personal.rowan.sandbox.model.species.Color;
 import personal.rowan.sandbox.model.species.EggGroup;
 import personal.rowan.sandbox.model.species.FlavorTextEntry;
@@ -28,7 +27,7 @@ import personal.rowan.sandbox.model.species.Version;
 
 public class PokemonUtil {
 
-    public static String createDetailString(PokemonSpecies pokemon) {
+    /*public static String createDetailString(PokemonSpecies pokemon) {
         if(pokemon == null) return "";
 
         StringBuilder b = new StringBuilder();
@@ -96,7 +95,7 @@ public class PokemonUtil {
         }
 
         return b.toString();
-    }
+    }*/
 
     public static SpannableStringBuilder getPokedexEntriesString(PokemonSpecies pokemon) {
         SpannableStringBuilder b = new SpannableStringBuilder();
@@ -144,26 +143,6 @@ public class PokemonUtil {
         return "#" + numberString;
     }
 
-    public static String formatAbilityName(Ability ability) {
-        String formattedName = formatName(ability.getAbility().getName());
-        return ability.getIsHidden() ? formattedName + " (H)" : formattedName;
-    }
-
-    private static String capitalizeAllWords(String string) {
-        StringBuilder b = new StringBuilder();
-        String[] words = string.split(" ");
-        for(String word : words) {
-            b.append(capitalizeWord(word)).append(" ");
-        }
-        return b.toString();
-    }
-
-    public static String capitalizeWord(String string) {
-        if(string == null || string.isEmpty()) return string;
-        if(string.length() == 1) return string.toUpperCase();
-        return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
-    }
-
     public static String buildPokemonArtworkUrl(String name) {
         return "https://img.pokemondb.net/artwork/" +
                 name +
@@ -176,10 +155,67 @@ public class PokemonUtil {
                 ".png";
     }
 
-    public static void addNumbersToResults(List<Result> results, Integer offset) {
-        for(int i = 0; i < results.size(); i++) {
-            results.get(i).setNumber(offset + i + 1);
+    public static String getFormattedType(List<Type> types) {
+        if(types == null || types.isEmpty()) {
+            return "";
         }
+        String type1 = types.get(0).getType().getName();
+        if(types.size() <= 1) {
+            return PokemonUtil.capitalizeWord(type1);
+        } else {
+            return PokemonUtil.capitalizeWord(types.get(1).getType().getName()) + "/" + PokemonUtil.capitalizeWord(type1);
+        }
+    }
+
+    public static String getFormattedWeight(Double weight) {
+        return String.valueOf(weight / 10) + " kg";
+    }
+
+    public static String getFormattedHeight(Double height) {
+        return String.valueOf(height / 10) + " m";
+    }
+
+    public static String getFormattedAbilities(List<Ability> abilities) {
+        if(abilities == null || abilities.isEmpty()) {
+            return "";
+        }
+        Ability ability1 = abilities.get(0);
+        if(abilities.size() == 1) {
+            return PokemonUtil.formatAbilityName(ability1);
+        } else {
+            StringBuilder b = new StringBuilder();
+            for(int i = abilities.size() - 1; i >= 0; i--) {
+                b.append(PokemonUtil.formatAbilityName(abilities.get(i)));
+                if(i > 0) {
+                    b.append("\n");
+                }
+            }
+            return b.toString();
+        }
+    }
+
+    private static String formatAbilityName(Ability ability) {
+        String formattedName = formatName(ability.getAbility().getName());
+        return ability.getIsHidden() ? formattedName + " (H)" : formattedName;
+    }
+
+    /**
+     * String Util methods
+     */
+
+    private static String capitalizeAllWords(String string) {
+        StringBuilder b = new StringBuilder();
+        String[] words = string.split(" ");
+        for(String word : words) {
+            b.append(capitalizeWord(word)).append(" ");
+        }
+        return b.toString();
+    }
+
+    private static String capitalizeWord(String string) {
+        if(string == null || string.isEmpty()) return string;
+        if(string.length() == 1) return string.toUpperCase();
+        return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
     }
 
 }

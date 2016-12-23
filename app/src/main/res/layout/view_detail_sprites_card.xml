@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="pokemon"
-            type="personal.rowan.sandbox.model.pokemon.Pokemon"/>
+            name="viewModel"
+            type="personal.rowan.sandbox.ui.detail.DetailViewModel.DetailSpritesCardViewModel"/>
     </data>
     
     <LinearLayout
@@ -41,7 +41,7 @@
                 android:layout_height="102dp"
                 android:contentDescription="@string/activity_detail_front_sprite_content_description"
                 android:layout_weight="1"
-                app:imageUrl="@{pokemon.sprites.frontDefault}"/>
+                app:imageUrl="@{viewModel.frontSpriteUrl}"/>
 
             <ImageView
                 android:id="@+id/activity_detail_back_sprite_iv"
@@ -49,7 +49,7 @@
                 android:layout_height="102dp"
                 android:contentDescription="@string/activity_detail_back_sprite_content_description"
                 android:layout_weight="1"
-                app:imageUrl="@{pokemon.sprites.backDefault}"/>
+                app:imageUrl="@{viewModel.backSpriteUrl}"/>
 
         </LinearLayout>
 

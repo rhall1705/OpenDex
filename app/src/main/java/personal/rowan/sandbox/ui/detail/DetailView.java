@@ -1,8 +1,5 @@
 package personal.rowan.sandbox.ui.detail;
 
-import personal.rowan.sandbox.model.pokemon.Pokemon;
-import personal.rowan.sandbox.model.species.PokemonSpecies;
-
 /**
  * Created by Rowan Hall
  */
@@ -13,7 +10,7 @@ interface DetailView {
 
     String getNameArgument();
 
-    void displayPokemon(Pokemon data);
+    void bindViewModel(DetailViewModel viewModel);
 
     void showErrorMessage(Throwable e);
 
@@ -23,9 +20,7 @@ interface DetailView {
 
     void abort();
 
-    void onRefresh();
-
-    void displayPokedexEntry(PokemonSpecies data);
+    void onDisplayPokedexEntry();
 
     void showPokedexEntryProgress();
 

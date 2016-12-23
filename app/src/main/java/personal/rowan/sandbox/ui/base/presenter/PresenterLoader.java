@@ -44,7 +44,6 @@ class PresenterLoader<P extends BasePresenter>
             mPresenter.onDestroyed();
             mPresenter = null;
         }
-        //potentially let mPresenter know it's done.
     }
 
 }

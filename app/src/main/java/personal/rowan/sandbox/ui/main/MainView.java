@@ -2,15 +2,13 @@ package personal.rowan.sandbox.ui.main;
 
 import java.util.List;
 
-import personal.rowan.sandbox.model.Result;
-
 /**
  * Created by Rowan Hall
  */
 
 interface MainView {
 
-    void displayPokemonList(List<Result> data);
+    void displayPokemonList(List<MainViewModel> data);
 
     void navigateToPokemonDetail(String name, Integer number);
 

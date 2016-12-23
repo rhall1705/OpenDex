@@ -1,12 +1,9 @@
 package personal.rowan.sandbox.model;
 
-import personal.rowan.sandbox.util.PokemonUtil;
-
 public class Result {
 
     private String url;
     private String name;
-    private Integer number;
 
     /**
      * 
@@ -42,26 +39,6 @@ public class Result {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public String getFormattedName() {
-        return PokemonUtil.formatName(name);
-    }
-
-    public String getFormattedNumber() {
-        return PokemonUtil.formatNumber(number);
-    }
-
-    public String getModelUrl() {
-        return PokemonUtil.buildPokemonModelUrl(name);
     }
 
 }

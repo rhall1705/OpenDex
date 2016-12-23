@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.databinding.ViewDetailStatsCardBinding;
-import personal.rowan.sandbox.model.pokemon.Pokemon;
+import personal.rowan.sandbox.ui.detail.DetailViewModel;
 
 /**
  * Created by Rowan Hall
@@ -33,8 +33,8 @@ public class DetailStatsCardView extends LinearLayout {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.view_detail_stats_card, this, true);
     }
 
-    public void setPokemon(Pokemon pokemon) {
-        mBinding.setPokemon(pokemon);
+    public void setViewModel(DetailViewModel.DetailStatsCardViewModel viewModel) {
+        mBinding.setViewModel(viewModel);
     }
 
 }

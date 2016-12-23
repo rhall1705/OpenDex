@@ -2,10 +2,13 @@ package personal.rowan.sandbox.ui.main;
 
 import com.jakewharton.rxbinding.support.v7.widget.RecyclerViewScrollEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import personal.rowan.sandbox.model.PokemonList;
+import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenter;
-import personal.rowan.sandbox.util.PokemonUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -23,7 +26,9 @@ class MainPresenter
     private PokemonService mPokemonService;
     private Subscription mApiSubscription;
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
-    private PokemonList mResult;
+
+    private List<MainViewModel> mResult;
+    private Integer mCount;
     private Throwable mError;
 
     MainPresenter(PokemonService pokemonService) {
@@ -58,14 +63,13 @@ class MainPresenter
 
                     @Override
                     public void onNext(PokemonList pokemonList) {
+                        mCount = pokemonList.getCount();
                         // If this is the first query, the response becomes the dataset
                         // Otherwise, the response is appended to the dataset, likely due to pagination
                         if(mResult == null || offset == null) {
-                            PokemonUtil.addNumbersToResults(pokemonList.getResults(), 0);
-                            mResult = pokemonList;
+                            mResult = createViewModel(pokemonList.getResults(), 0);
                         } else {
-                            PokemonUtil.addNumbersToResults(pokemonList.getResults(), offset);
-                            mResult.getResults().addAll(pokemonList.getResults());
+                            mResult.addAll(createViewModel(pokemonList.getResults(), offset));
                         }
                         publish();
                     }
@@ -78,9 +82,9 @@ class MainPresenter
                 .subscribe(scrollEvent -> {
                     if(mView.shouldPaginate() &&
                             !isApiSubscriptionActive()
-                            && mResult.getResults().size() < mResult.getCount()) {
+                            && mResult.size() < mCount) {
                         mView.showProgress();
-                        refreshData(mResult.getResults().size());
+                        refreshData(mResult.size());
                     }
                 })
         );
@@ -94,7 +98,7 @@ class MainPresenter
     protected void publish() {
         if(mView != null) {
             if(mResult != null) {
-                mView.displayPokemonList(mResult.getResults());
+                mView.displayPokemonList(mResult);
             } else if(mError != null) {
                 mView.showErrorMessage(mError);
             } else {
@@ -114,7 +118,17 @@ class MainPresenter
         }
         mApiSubscription = null;
         mResult = null;
+        mCount = null;
         mError = null;
+    }
+
+    private static List<MainViewModel> createViewModel(List<Result> results, Integer offset) {
+        List<MainViewModel> viewModel = new ArrayList<>();
+        for(int i = 0; i < results.size(); i++) {
+            Result result = results.get(i);
+            viewModel.add(new MainViewModel(result.getName(), offset + i + 1));
+        }
+        return viewModel;
     }
 
 }

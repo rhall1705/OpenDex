@@ -17,12 +17,10 @@ public interface DetailComponent {
 
     void inject(DetailActivity detailActivity);
 
-    Action1<DetailActivity> injector = (activity) -> {
-        DaggerDetailComponent
-                .builder()
-                .applicationComponent(App.applicationComponent(activity))
-                .build()
-                .inject(activity);
-    };
+    Action1<DetailActivity> injector = activity -> DaggerDetailComponent
+            .builder()
+            .applicationComponent(App.applicationComponent(activity))
+            .build()
+            .inject(activity);
 
 }

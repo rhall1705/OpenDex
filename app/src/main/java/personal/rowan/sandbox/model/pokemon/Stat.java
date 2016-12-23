@@ -64,10 +64,6 @@ public class Stat {
         this.base_stat = baseStat;
     }
 
-    public String getName() {
-        return PokemonUtil.formatName(stat.getName());
-    }
-
     public String getBaseStatString() {
         return String.valueOf(base_stat);
     }

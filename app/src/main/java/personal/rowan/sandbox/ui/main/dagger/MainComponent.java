@@ -17,12 +17,10 @@ public interface MainComponent {
 
     void inject(MainActivity mainActivity);
 
-    Action1<MainActivity> injector = (activity) -> {
-        DaggerMainComponent
-                .builder()
-                .applicationComponent(App.applicationComponent(activity))
-                .build()
-                .inject(activity);
-    };
+    Action1<MainActivity> injector = activity -> DaggerMainComponent
+            .builder()
+            .applicationComponent(App.applicationComponent(activity))
+            .build()
+            .inject(activity);
 
 }

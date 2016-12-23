@@ -11,8 +11,7 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.databinding.ViewDetailFlavorCardBinding;
-import personal.rowan.sandbox.model.pokemon.Pokemon;
-import personal.rowan.sandbox.model.species.PokemonSpecies;
+import personal.rowan.sandbox.ui.detail.DetailViewModel;
 import rx.Observable;
 
 /**
@@ -39,15 +38,8 @@ public class DetailFlavorCardView
         mBinding = DataBindingUtil.inflate(inflater, R.layout.view_detail_flavor_card, this, true);
     }
 
-    public void setPokemon(Pokemon pokemon) {
-        mBinding.setPokemon(pokemon);
-    }
-
-    public void setPokemonSpecies(PokemonSpecies species) {
-        if(species != null) {
-            mBinding.setPokemonSpecies(species);
-            mBinding.activityDetailPokedexEntriesLl.setVisibility(View.VISIBLE);
-        }
+    public void setViewModel(DetailViewModel.DetailFlavorCardViewModel viewModel) {
+        mBinding.setViewModel(viewModel);
     }
 
     public Observable<Void> onPokedexEntriesClicked() {
@@ -59,11 +51,10 @@ public class DetailFlavorCardView
         mBinding.activityDetailLoadFlavorPb.setVisibility(View.VISIBLE);
     }
 
-    public void onPokedexEntriesSuccess(PokemonSpecies species) {
+    public void onPokedexEntriesSuccess() {
         mBinding.activityDetailLoadFlavorBtn.setVisibility(View.GONE);
         mBinding.activityDetailLoadFlavorPb.setVisibility(View.GONE);
-
-        setPokemonSpecies(species);
+        mBinding.activityDetailPokedexEntriesLl.setVisibility(View.VISIBLE);
     }
 
     public void onPokedexEntriesFailure() {

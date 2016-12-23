@@ -18,7 +18,6 @@ import javax.inject.Inject;
 
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.databinding.ActivityMainBinding;
-import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.ui.base.BaseRecyclerViewAdapter;
 import personal.rowan.sandbox.ui.base.BaseViewHolder;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
@@ -82,7 +81,7 @@ public class MainActivity
     }
 
     @Override
-    public void displayPokemonList(List<Result> data) {
+    public void displayPokemonList(List<MainViewModel> data) {
         hideProgress();
         mAdapter.paginateData(data);
     }
@@ -118,7 +117,7 @@ public class MainActivity
 
     @Override
     public boolean onItemClick(BaseRecyclerViewAdapter adapter, BaseViewHolder holder, View adapterView, int position) {
-        Result item = mAdapter.getItem(position);
+        MainViewModel item = mAdapter.getItem(position);
         navigateToPokemonDetail(item.getName(), item.getNumber());
         return true;
     }

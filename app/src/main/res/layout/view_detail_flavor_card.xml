@@ -3,11 +3,8 @@
 
     <data>
         <variable
-            name="pokemon"
-            type="personal.rowan.sandbox.model.pokemon.Pokemon"/>
-        <variable
-            name="pokemonSpecies"
-            type="personal.rowan.sandbox.model.species.PokemonSpecies"/>
+            name="viewModel"
+            type="personal.rowan.sandbox.ui.detail.DetailViewModel.DetailFlavorCardViewModel"/>
     </data>
 
     <LinearLayout
@@ -41,8 +38,7 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:text="@string/activity_detail_type_header"
-                    android:textColor="@color/textColorPrimary"
-                    android:id="@+id/textView2" />
+                    android:textColor="@color/textColorPrimary" />
 
                 <TextView
                     android:id="@+id/activity_detail_type_tv"
@@ -50,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/textColorPrimaryLight"
-                    android:text="@{pokemon.formattedType}"/>
+                    android:text="@{viewModel.type}"/>
 
             </LinearLayout>
 
@@ -75,7 +71,7 @@
                     android:gravity="center"
                     android:textSize="16sp"
                     android:textColor="@color/textColorPrimaryLight"
-                    android:text="@{pokemon.abilitiesString}"/>
+                    android:text="@{viewModel.abilities}"/>
 
             </LinearLayout>
 
@@ -111,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/textColorPrimaryLight"
-                    android:text="@{pokemon.heightString}"/>
+                    android:text="@{viewModel.height}"/>
 
             </LinearLayout>
 
@@ -136,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/textColorPrimaryLight"
-                    android:text="@{pokemon.weightString}"/>
+                    android:text="@{viewModel.weight}"/>
 
             </LinearLayout>
 
@@ -167,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textColor="@color/textColorPrimaryLight"
-                android:text="@{pokemonSpecies.pokedexEntriesString}" />
+                android:text="@{viewModel.pokedexEntries}" />
 
         </LinearLayout>
 
