@@ -1,5 +1,7 @@
 package personal.rowan.sandbox.ui.main;
 
+import android.os.Bundle;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ interface MainView {
 
     void displayPokemonList(List<MainViewModel> data);
 
-    void navigateToPokemonDetail(String name, Integer number);
+    void navigateToPokemonDetail(String name, Integer number, Bundle extras);
 
     boolean shouldPaginate();
 

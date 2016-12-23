@@ -48,6 +48,7 @@
             android:layout_alignParentEnd="true"
             android:scaleType="fitCenter"
             android:contentDescription="@string/activity_main_model_content_description"
+            android:transitionName="@string/activity_detail_transition_name"
             app:imageUrl="@{viewModel.modelUrl}"/>
 
     </RelativeLayout>

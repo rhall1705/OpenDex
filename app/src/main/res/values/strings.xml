@@ -4,6 +4,7 @@
     <string name="activity_main_title">Pokemon List</string>
     <string name="activity_main_model_content_description">The image for the Pokemon</string>
 
+    <string name="activity_detail_transition_name">detail_model_transition</string>
     <string name="activity_detail_abort_message">Pokemon data not found.</string>
     <string name="activity_detail_header_content_description">The image for the Pokemon</string>
     <string name="activity_detail_front_sprite_content_description">The front sprite for the Pokemon</string>

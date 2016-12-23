@@ -143,6 +143,7 @@
             android:layout_height="@dimen/image_width"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/activity_detail_header_content_description"
+            android:transitionName="@string/activity_detail_transition_name"
             app:imageUrl="@{viewModel.modelUrl}"
             app:finalHeight="@dimen/image_final_width"
             app:layout_behavior="personal.rowan.sandbox.ui.detail.coordinator.DetailImageBehavior"/>
