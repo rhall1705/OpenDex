@@ -12,6 +12,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/backgroundColorPrimary"
         tools:ignore="RtlHardcoded">
 
         <android.support.design.widget.AppBarLayout
@@ -131,7 +132,7 @@
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
                     android:text="@{viewModel.name}"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="20sp"/>
 
             </LinearLayout>
