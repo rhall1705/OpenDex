@@ -15,7 +15,7 @@
         android:background="@color/backgroundColorPrimary"
         tools:ignore="RtlHardcoded">
 
-        <android.support.design.widget.AppBarLayout
+        <personal.rowan.sandbox.ui.detail.coordinator.DetailAppBarLayout
             android:id="@+id/activity_detail_abl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
-        </android.support.design.widget.AppBarLayout>
+        </personal.rowan.sandbox.ui.detail.coordinator.DetailAppBarLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/activity_detail_srl"

@@ -10,7 +10,6 @@ import javax.inject.Inject;
 
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.databinding.ActivityDetailBinding;
-import personal.rowan.sandbox.ui.detail.coordinator.DetailOffsetChangedListener;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenterActivity;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
 import personal.rowan.sandbox.ui.detail.dagger.DetailComponent;
@@ -56,8 +55,8 @@ public class DetailActivity
         swipeRefreshLayout.setOnRefreshListener(() -> mPresenter.refreshData(getNumberArgument()));
         swipeRefreshLayout.setEnabled(false);
 
-        new DetailOffsetChangedListener().bind(mBinding.activityDetailAbl,
-                        mBinding.activityDetailCollapsedTitleTv,
+        mBinding.activityDetailAbl
+                .bind(mBinding.activityDetailCollapsedTitleTv,
                         mBinding.activityDetailExpandedTitleTv);
     }
 
