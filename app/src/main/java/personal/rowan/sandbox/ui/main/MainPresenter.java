@@ -53,8 +53,6 @@ class MainPresenter
         }
 
         mCompositeSubscription.add(mApiSubscription = mRealmManager.load()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(realmViewModels -> {
                     if(!clear && isCacheValid(realmViewModels)) {
                         mCount = realmViewModels.size() + 1;
@@ -62,13 +60,13 @@ class MainPresenter
                     }
 
                     return mPokemonService.getPokemonList(offset)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .flatMap(pokemonList -> {
+                            .map(pokemonList -> {
                                 mCount = pokemonList.getCount();
-                                return Observable.just(createViewModel(pokemonList.getResults(), offset));
+                                return createViewModel(pokemonList.getResults(), offset);
                             });
                 })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<MainViewModel>>() {
                     @Override
                     public void onCompleted() {

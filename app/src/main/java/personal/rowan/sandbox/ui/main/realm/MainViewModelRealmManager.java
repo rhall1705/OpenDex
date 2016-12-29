@@ -22,12 +22,12 @@ public class MainViewModelRealmManager {
 
     public Observable<List<MainViewModel>> load() {
         return Observable.just(mRealm.copyFromRealm(mRealm.allObjects(RealmMainViewModel.class)))
-                .flatMap(realmResults -> {
+                .map(realmResults -> {
                         List<MainViewModel> viewModels = new ArrayList<>();
                         for(RealmMainViewModel realmResult : realmResults) {
                             viewModels.add(new MainViewModel(realmResult));
                         }
-                        return Observable.just(viewModels);
+                        return viewModels;
                     }
                 );
     }
