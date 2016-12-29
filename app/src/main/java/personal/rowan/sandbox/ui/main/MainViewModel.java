@@ -1,19 +1,25 @@
 package personal.rowan.sandbox.ui.main;
 
-import personal.rowan.sandbox.ui.main.realm.RealmMainViewModel;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import personal.rowan.sandbox.util.PokemonUtil;
 
 /**
  * Created by Rowan Hall
  */
 
-public class MainViewModel {
+public class MainViewModel
+        extends RealmObject {
 
     private String mName;
-    private Integer mNumber;
+    @PrimaryKey private Integer mNumber;
     private String mFormattedName;
     private String mFormattedNumber;
     private String mModelUrl;
+
+    public MainViewModel() {
+
+    }
 
     MainViewModel(String name, Integer number) {
         mName = name;
@@ -21,14 +27,6 @@ public class MainViewModel {
         mFormattedName = PokemonUtil.formatName(mName);
         mFormattedNumber = PokemonUtil.formatNumber(mNumber);
         mModelUrl = PokemonUtil.buildPokemonModelUrl(mName);
-    }
-
-    public MainViewModel(RealmMainViewModel viewModel) {
-        mName = viewModel.getName();
-        mNumber = viewModel.getNumber();
-        mFormattedName = viewModel.getFormattedName();
-        mFormattedNumber = viewModel.getFormattedNumber();
-        mModelUrl = viewModel.getModelUrl();
     }
 
     public String getName() {
