@@ -3,6 +3,8 @@ package personal.rowan.sandbox.application;
 import android.app.Application;
 import android.content.Context;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import personal.rowan.sandbox.application.dagger.component.ApplicationComponent;
 import personal.rowan.sandbox.application.dagger.component.DaggerApplicationComponent;
 import personal.rowan.sandbox.application.dagger.module.ApplicationModule;
@@ -19,6 +21,11 @@ public class App
     @Override
     public void onCreate() {
         super.onCreate();
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfiguration);
 
         mAppComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))

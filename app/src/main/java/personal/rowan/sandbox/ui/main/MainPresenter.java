@@ -24,6 +24,7 @@ class MainPresenter
         extends BasePresenter<MainView> {
 
     private PokemonService mPokemonService;
+    private MainViewModelRealmManager mRealmManager;
     private Subscription mApiSubscription;
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
@@ -31,15 +32,19 @@ class MainPresenter
     private Integer mCount;
     private Throwable mError;
 
-    MainPresenter(PokemonService pokemonService) {
+    MainPresenter(PokemonService pokemonService, MainViewModelRealmManager realmManager) {
         super(MainView.class);
         mPokemonService = pokemonService;
-
+        mRealmManager = realmManager;
         refreshData(null);
     }
 
     void refreshData(Integer offset) {
         if(isApiSubscriptionActive()) {
+            return;
+        }
+
+        if(loadFromRealm()) {
             return;
         }
 
@@ -71,6 +76,7 @@ class MainPresenter
                         } else {
                             mResult.addAll(createViewModel(pokemonList.getResults(), offset));
                         }
+                        mRealmManager.addViewModels(mResult);
                         publish();
                     }
                 }));
@@ -110,6 +116,8 @@ class MainPresenter
     @Override
     protected void onDestroyed() {
         mPokemonService = null;
+        mRealmManager.close();
+        mRealmManager = null;
         if(mCompositeSubscription != null) {
             if(!mCompositeSubscription.isUnsubscribed()) {
                 mCompositeSubscription.unsubscribe();
@@ -120,6 +128,18 @@ class MainPresenter
         mResult = null;
         mCount = null;
         mError = null;
+    }
+
+    private boolean loadFromRealm() {
+        List<MainViewModel> realmViewModels = mRealmManager.getAllViewModels();
+        if(realmViewModels != null && !realmViewModels.isEmpty() &&
+                (mResult == null || mResult.size() < realmViewModels.size())) {
+            mResult = realmViewModels;
+            mCount = mResult.size() + 1;
+            publish();
+            return true;
+        }
+        return false;
     }
 
     private static List<MainViewModel> createViewModel(List<Result> results, Integer offset) {

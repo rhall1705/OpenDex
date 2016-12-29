@@ -15,15 +15,17 @@ public class MainPresenterFactory
         implements PresenterFactory<MainPresenter> {
 
     private PokemonService mPokemonService;
+    private MainViewModelRealmManager mRealmManager;
 
     @Inject
-    MainPresenterFactory(PokemonService pokemonService) {
+    MainPresenterFactory(PokemonService pokemonService, MainViewModelRealmManager realmManager) {
         mPokemonService = pokemonService;
+        mRealmManager = realmManager;
     }
 
     @Override
     public MainPresenter create() {
-        return new MainPresenter(mPokemonService);
+        return new MainPresenter(mPokemonService, mRealmManager);
     }
 
 }
