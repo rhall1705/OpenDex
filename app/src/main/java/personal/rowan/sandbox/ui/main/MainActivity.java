@@ -33,7 +33,7 @@ import personal.rowan.sandbox.ui.main.recycler.MainListViewHolder;
 @MainScope
 public class MainActivity
         extends BasePresenterActivity<MainPresenter, MainView>
-        implements MainView, BaseRecyclerViewAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+        implements MainView, BaseRecyclerViewAdapter.OnItemClickListener {
 
     @Inject
     MainPresenterFactory mPresenterFactory;
@@ -69,7 +69,7 @@ public class MainActivity
 
         SwipeRefreshLayout swipeRefreshLayout = mBinding.activityMainSrl;
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorSwipeRefresh));
-        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnRefreshListener(() -> mPresenter.clearAndRefreshData());
     }
 
     @Override
@@ -126,11 +126,6 @@ public class MainActivity
         MainViewModel item = mAdapter.getItem(position);
         navigateToPokemonDetail(item.getName(), item.getNumber(), options.toBundle());
         return true;
-    }
-
-    @Override
-    public void onRefresh() {
-        mPresenter.refreshData(null);
     }
 
 }

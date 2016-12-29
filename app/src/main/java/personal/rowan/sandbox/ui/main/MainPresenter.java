@@ -5,7 +5,6 @@ import com.jakewharton.rxbinding.support.v7.widget.RecyclerViewScrollEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import personal.rowan.sandbox.model.PokemonList;
 import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenter;
@@ -39,20 +38,37 @@ class MainPresenter
         refreshData(null);
     }
 
-    void refreshData(Integer offset) {
+    void clearAndRefreshData() {
+        refreshData(0, true);
+    }
+
+    private void refreshData(Integer offset) {
+        refreshData(offset, false);
+    }
+
+    private void refreshData(Integer offset, boolean clear) {
         if(isApiSubscriptionActive()) {
             return;
         }
 
-        if(loadFromRealm()) {
-            return;
-        }
-
-        Observable<PokemonList> pokemonList = mPokemonService.getPokemonList(offset);
-        mCompositeSubscription.add(mApiSubscription = pokemonList
+        mCompositeSubscription.add(mApiSubscription = mRealmManager.load()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PokemonList>() {
+                .flatMap(realmViewModels -> {
+                    if(!clear && isCacheValid(realmViewModels)) {
+                        mCount = realmViewModels.size() + 1;
+                        return Observable.just(realmViewModels);
+                    }
+
+                    return mPokemonService.getPokemonList(offset)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .flatMap(pokemonList -> {
+                                mCount = pokemonList.getCount();
+                                return Observable.just(createViewModel(pokemonList.getResults(), offset));
+                            });
+                })
+                .subscribe(new Subscriber<List<MainViewModel>>() {
                     @Override
                     public void onCompleted() {
                         if(mView != null) {
@@ -67,19 +83,25 @@ class MainPresenter
                     }
 
                     @Override
-                    public void onNext(PokemonList pokemonList) {
-                        mCount = pokemonList.getCount();
-                        // If this is the first query, the response becomes the dataset
-                        // Otherwise, the response is appended to the dataset, likely due to pagination
-                        if(mResult == null || offset == null) {
-                            mResult = createViewModel(pokemonList.getResults(), 0);
-                        } else {
-                            mResult.addAll(createViewModel(pokemonList.getResults(), offset));
+                    public void onNext(List<MainViewModel> viewModels) {
+                        if(mResult == null) {
+                            mResult = new ArrayList<>();
                         }
-                        mRealmManager.addViewModels(mResult);
+                        if(clear) {
+                            mResult.clear();
+                            mRealmManager.clear();
+                        }
+                        mResult.addAll(viewModels);
+                        mRealmManager.update(viewModels);
                         publish();
                     }
-                }));
+                })
+        );
+    }
+
+    private boolean isCacheValid(List<MainViewModel> realmViewModels) {
+        return realmViewModels != null && !realmViewModels.isEmpty() &&
+                (mResult == null || mResult.size() < realmViewModels.size());
     }
 
     void bindRecyclerView(Observable<RecyclerViewScrollEvent> observable) {
@@ -130,19 +152,8 @@ class MainPresenter
         mError = null;
     }
 
-    private boolean loadFromRealm() {
-        List<MainViewModel> realmViewModels = mRealmManager.getAllViewModels();
-        if(realmViewModels != null && !realmViewModels.isEmpty() &&
-                (mResult == null || mResult.size() < realmViewModels.size())) {
-            mResult = realmViewModels;
-            mCount = mResult.size() + 1;
-            publish();
-            return true;
-        }
-        return false;
-    }
-
     private static List<MainViewModel> createViewModel(List<Result> results, Integer offset) {
+        if(offset == null) offset = 0;
         List<MainViewModel> viewModel = new ArrayList<>();
         for(int i = 0; i < results.size(); i++) {
             Result result = results.get(i);
