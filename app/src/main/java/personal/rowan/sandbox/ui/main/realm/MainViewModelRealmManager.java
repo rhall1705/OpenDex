@@ -1,4 +1,4 @@
-package personal.rowan.sandbox.ui.main;
+package personal.rowan.sandbox.ui.main.realm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,20 +6,21 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.realm.Realm;
+import personal.rowan.sandbox.ui.main.MainViewModel;
 import personal.rowan.sandbox.ui.main.dagger.MainScope;
 import rx.Observable;
 
 @MainScope
-class MainViewModelRealmManager {
+public class MainViewModelRealmManager {
 
     private Realm mRealm;
 
     @Inject
-    MainViewModelRealmManager(Realm realm) {
+    public MainViewModelRealmManager(Realm realm) {
         mRealm = realm;
     }
 
-    Observable<List<MainViewModel>> load() {
+    public Observable<List<MainViewModel>> load() {
         return Observable.just(mRealm.copyFromRealm(mRealm.allObjects(RealmMainViewModel.class)))
                 .flatMap(realmResults -> {
                         List<MainViewModel> viewModels = new ArrayList<>();
@@ -31,7 +32,7 @@ class MainViewModelRealmManager {
                 );
     }
 
-    void update(List<MainViewModel> viewModels) {
+    public void update(List<MainViewModel> viewModels) {
         mRealm.beginTransaction();
         for(MainViewModel viewModel : viewModels) {
             mRealm.copyToRealmOrUpdate(new RealmMainViewModel(viewModel));
@@ -39,13 +40,13 @@ class MainViewModelRealmManager {
         mRealm.commitTransaction();
     }
 
-    void clear() {
+    public void clear() {
         mRealm.beginTransaction();
         mRealm.allObjects(RealmMainViewModel.class).clear();
         mRealm.commitTransaction();
     }
 
-    void close() {
+    public void close() {
         mRealm.close();
     }
 

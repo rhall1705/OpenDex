@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
 import personal.rowan.sandbox.ui.main.dagger.MainScope;
+import personal.rowan.sandbox.ui.main.realm.MainViewModelRealmManager;
 
 /**
  * Created by Rowan Hall

@@ -1,5 +1,6 @@
 package personal.rowan.sandbox.ui.main;
 
+import personal.rowan.sandbox.ui.main.realm.RealmMainViewModel;
 import personal.rowan.sandbox.util.PokemonUtil;
 
 /**
@@ -22,7 +23,7 @@ public class MainViewModel {
         mModelUrl = PokemonUtil.buildPokemonModelUrl(mName);
     }
 
-    MainViewModel(RealmMainViewModel viewModel) {
+    public MainViewModel(RealmMainViewModel viewModel) {
         mName = viewModel.getName();
         mNumber = viewModel.getNumber();
         mFormattedName = viewModel.getFormattedName();
@@ -30,11 +31,11 @@ public class MainViewModel {
         mModelUrl = viewModel.getModelUrl();
     }
 
-    String getName() {
+    public String getName() {
         return mName;
     }
 
-    Integer getNumber() {
+    public Integer getNumber() {
         return mNumber;
     }
 

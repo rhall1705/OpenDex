@@ -8,6 +8,7 @@ import java.util.List;
 import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenter;
+import personal.rowan.sandbox.ui.main.realm.MainViewModelRealmManager;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;

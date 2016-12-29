@@ -1,7 +1,8 @@
-package personal.rowan.sandbox.ui.main;
+package personal.rowan.sandbox.ui.main.realm;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import personal.rowan.sandbox.ui.main.MainViewModel;
 
 public class RealmMainViewModel 
         extends RealmObject {
@@ -24,23 +25,23 @@ public class RealmMainViewModel
         mModelUrl = viewModel.getModelUrl();
     }
 
-    String getName() {
+    public String getName() {
         return mName;
     }
 
-    Integer getNumber() {
+    public Integer getNumber() {
         return mNumber;
     }
 
-    String getFormattedName() {
+    public String getFormattedName() {
         return mFormattedName;
     }
 
-    String getFormattedNumber() {
+    public String getFormattedNumber() {
         return mFormattedNumber;
     }
 
-    String getModelUrl() {
+    public String getModelUrl() {
         return mModelUrl;
     }
 
