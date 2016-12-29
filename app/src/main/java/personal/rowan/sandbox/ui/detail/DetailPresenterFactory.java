@@ -15,15 +15,17 @@ class DetailPresenterFactory
         implements PresenterFactory<DetailPresenter> {
 
     private PokemonService mPokemonService;
+    private DetailRealmManager mRealmManager;
 
     @Inject
-    DetailPresenterFactory(PokemonService pokemonService) {
+    DetailPresenterFactory(PokemonService pokemonService, DetailRealmManager detailRealmManager) {
         mPokemonService = pokemonService;
+        mRealmManager = detailRealmManager;
     }
 
     @Override
     public DetailPresenter create() {
-        return new DetailPresenter(mPokemonService);
+        return new DetailPresenter(mPokemonService, mRealmManager);
     }
 
 }

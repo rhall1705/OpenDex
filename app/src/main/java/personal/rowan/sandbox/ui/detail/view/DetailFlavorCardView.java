@@ -11,7 +11,6 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.databinding.ViewDetailFlavorCardBinding;
-import personal.rowan.sandbox.ui.detail.DetailViewModel;
 import rx.Observable;
 
 /**
@@ -38,7 +37,7 @@ public class DetailFlavorCardView
         mBinding = DataBindingUtil.inflate(inflater, R.layout.view_detail_flavor_card, this, true);
     }
 
-    public void setViewModel(DetailViewModel.DetailFlavorCardViewModel viewModel) {
+    public void setViewModel(DetailFlavorCardViewModel viewModel) {
         mBinding.setViewModel(viewModel);
     }
 

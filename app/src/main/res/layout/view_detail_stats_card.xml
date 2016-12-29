@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="personal.rowan.sandbox.ui.detail.DetailViewModel.DetailStatsCardViewModel"/>
+            type="personal.rowan.sandbox.ui.detail.view.DetailStatsCardViewModel"/>
     </data>
 
     <LinearLayout

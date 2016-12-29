@@ -11,17 +11,19 @@ import personal.rowan.sandbox.ui.main.dagger.MainScope;
 import rx.Observable;
 
 @MainScope
-public class MainViewModelRealmManager {
+public class MainRealmManager {
 
     private Realm mRealm;
 
     @Inject
-    public MainViewModelRealmManager(Realm realm) {
+    public MainRealmManager(Realm realm) {
         mRealm = realm;
     }
 
     public Observable<List<MainViewModel>> load() {
-        return Observable.just(mRealm.copyFromRealm(mRealm.allObjects(RealmMainViewModel.class)))
+        mRealm.where(RealmMainViewModel.class).findAll();
+
+        return Observable.just(mRealm.copyFromRealm(mRealm.where(RealmMainViewModel.class).findAll()))
                 .map(realmResults -> {
                         List<MainViewModel> viewModels = new ArrayList<>();
                         for(RealmMainViewModel realmResult : realmResults) {

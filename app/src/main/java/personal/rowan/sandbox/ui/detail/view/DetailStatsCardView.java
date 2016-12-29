@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 
 import personal.rowan.sandbox.R;
 import personal.rowan.sandbox.databinding.ViewDetailStatsCardBinding;
-import personal.rowan.sandbox.ui.detail.DetailViewModel;
 
 /**
  * Created by Rowan Hall
@@ -33,7 +32,7 @@ public class DetailStatsCardView extends LinearLayout {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.view_detail_stats_card, this, true);
     }
 
-    public void setViewModel(DetailViewModel.DetailStatsCardViewModel viewModel) {
+    public void setViewModel(DetailStatsCardViewModel viewModel) {
         mBinding.setViewModel(viewModel);
     }
 

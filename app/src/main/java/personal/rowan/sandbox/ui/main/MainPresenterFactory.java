@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.PresenterFactory;
 import personal.rowan.sandbox.ui.main.dagger.MainScope;
-import personal.rowan.sandbox.ui.main.realm.MainViewModelRealmManager;
+import personal.rowan.sandbox.ui.main.realm.MainRealmManager;
 
 /**
  * Created by Rowan Hall
@@ -16,10 +16,10 @@ public class MainPresenterFactory
         implements PresenterFactory<MainPresenter> {
 
     private PokemonService mPokemonService;
-    private MainViewModelRealmManager mRealmManager;
+    private MainRealmManager mRealmManager;
 
     @Inject
-    MainPresenterFactory(PokemonService pokemonService, MainViewModelRealmManager realmManager) {
+    MainPresenterFactory(PokemonService pokemonService, MainRealmManager realmManager) {
         mPokemonService = pokemonService;
         mRealmManager = realmManager;
     }

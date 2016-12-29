@@ -24,6 +24,7 @@ class DetailPresenter
         extends BasePresenter<DetailView> {
 
     private PokemonService mPokemonService;
+    private DetailRealmManager mRealmManager;
     private String mNameArgument;
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
@@ -33,16 +34,22 @@ class DetailPresenter
     private Subscription mPokedexEntriesSubscription;
     private Throwable mPokedexEntriesError;
 
-    DetailPresenter(PokemonService pokemonService) {
+    DetailPresenter(PokemonService pokemonService, DetailRealmManager detailRealmManager) {
         super(DetailView.class);
         mPokemonService = pokemonService;
+        mRealmManager = detailRealmManager;
     }
 
     void setInitialData(String name) {
         mNameArgument = name;
-        mViewModel = new DetailViewModel(PokemonUtil.formatName(name),
-                PokemonUtil.buildPokemonArtworkUrl(name),
-                PokemonUtil.buildPokemonModelUrl(name));
+        mRealmManager.load(name)
+                .subscribe(viewModel -> {
+                    mViewModel = viewModel;
+                }, e -> {
+                    if(mView != null) {
+                        mView.abort();
+                    }
+                });
     }
 
     void refreshData(Integer number) {
@@ -71,6 +78,7 @@ class DetailPresenter
                     @Override
                     public void onNext(Pokemon result) {
                         setValues(result);
+                        mRealmManager.update(mViewModel);
                     }
                 }));
     }
@@ -141,6 +149,8 @@ class DetailPresenter
     @Override
     protected void onDestroyed() {
         mPokemonService = null;
+        mRealmManager.close();
+        mRealmManager = null;
         mNameArgument = null;
         if(mCompositeSubscription != null) {
             if(!mCompositeSubscription.isUnsubscribed()) {

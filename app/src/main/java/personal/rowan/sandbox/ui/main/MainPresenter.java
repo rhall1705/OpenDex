@@ -8,7 +8,7 @@ import java.util.List;
 import personal.rowan.sandbox.model.Result;
 import personal.rowan.sandbox.network.PokemonService;
 import personal.rowan.sandbox.ui.base.presenter.BasePresenter;
-import personal.rowan.sandbox.ui.main.realm.MainViewModelRealmManager;
+import personal.rowan.sandbox.ui.main.realm.MainRealmManager;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -24,7 +24,7 @@ class MainPresenter
         extends BasePresenter<MainView> {
 
     private PokemonService mPokemonService;
-    private MainViewModelRealmManager mRealmManager;
+    private MainRealmManager mRealmManager;
     private Subscription mApiSubscription;
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
@@ -32,7 +32,7 @@ class MainPresenter
     private Integer mCount;
     private Throwable mError;
 
-    MainPresenter(PokemonService pokemonService, MainViewModelRealmManager realmManager) {
+    MainPresenter(PokemonService pokemonService, MainRealmManager realmManager) {
         super(MainView.class);
         mPokemonService = pokemonService;
         mRealmManager = realmManager;

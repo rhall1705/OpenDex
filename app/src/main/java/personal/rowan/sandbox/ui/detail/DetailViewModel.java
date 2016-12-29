@@ -2,18 +2,29 @@ package personal.rowan.sandbox.ui.detail;
 
 import android.text.SpannableStringBuilder;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import personal.rowan.sandbox.ui.detail.view.DetailFlavorCardViewModel;
+import personal.rowan.sandbox.ui.detail.view.DetailSpritesCardViewModel;
+import personal.rowan.sandbox.ui.detail.view.DetailStatsCardViewModel;
+
 /**
  * Created by Rowan Hall
  */
 
-public class DetailViewModel {
+public class DetailViewModel
+        extends RealmObject {
 
-    private String mName;
+    @PrimaryKey private String mName;
     private String mArtworkUrl;
     private String mModelUrl;
     private DetailFlavorCardViewModel mFlavorCardViewModel;
     private DetailSpritesCardViewModel mSpritesCardViewModel;
     private DetailStatsCardViewModel mStatsCardViewModel;
+
+    public DetailViewModel() {
+
+    }
 
     DetailViewModel(String name, String artworkUrl, String modelUrl) {
         mName = name;
@@ -66,113 +77,6 @@ public class DetailViewModel {
 
     public DetailStatsCardViewModel getStatsCardViewModel() {
         return mStatsCardViewModel;
-    }
-
-    public class DetailFlavorCardViewModel {
-
-        private String mType;
-        private String mWeight;
-        private String mHeight;
-        private String mAbilities;
-        private SpannableStringBuilder mPokedexEntries;
-
-        DetailFlavorCardViewModel(String formattedType, String weight, String height, String abilities) {
-            mType = formattedType;
-            mWeight = weight;
-            mHeight = height;
-            mAbilities = abilities;
-        }
-
-        void setPokedexEntries(SpannableStringBuilder pokedexEntries) {
-            mPokedexEntries = pokedexEntries;
-        }
-
-        boolean hasPokedexEntries() {
-            return mPokedexEntries != null;
-        }
-
-        public String getType() {
-            return mType;
-        }
-
-        public String getWeight() {
-            return mWeight;
-        }
-
-        public String getHeight() {
-            return mHeight;
-        }
-
-        public String getAbilities() {
-            return mAbilities;
-        }
-
-        public SpannableStringBuilder getPokedexEntries() {
-            return mPokedexEntries;
-        }
-    }
-
-    public class DetailSpritesCardViewModel {
-
-        private String mFrontSpriteUrl;
-        private String mBackSpriteUrl;
-
-        DetailSpritesCardViewModel(String frontSpriteUrl, String backSpriteUrl) {
-            mFrontSpriteUrl = frontSpriteUrl;
-            mBackSpriteUrl = backSpriteUrl;
-        }
-
-        public String getFrontSpriteUrl() {
-            return mFrontSpriteUrl;
-        }
-
-        public String getBackSpriteUrl() {
-            return mBackSpriteUrl;
-        }
-
-    }
-
-    public class DetailStatsCardViewModel {
-
-        private String mHP;
-        private String mATK;
-        private String mDEF;
-        private String mSPATK;
-        private String mSPDEF;
-        private String mSPD;
-
-        DetailStatsCardViewModel (String HP, String ATK, String DEF, String SPATK, String SPDEF, String SPD) {
-            mHP = HP;
-            mATK = ATK;
-            mDEF = DEF;
-            mSPATK = SPATK;
-            mSPDEF = SPDEF;
-            mSPD = SPD;
-        }
-
-        public String getHP() {
-            return mHP;
-        }
-
-        public String getATK() {
-            return mATK;
-        }
-
-        public String getDEF() {
-            return mDEF;
-        }
-
-        public String getSPATK() {
-            return mSPATK;
-        }
-
-        public String getSPDEF() {
-            return mSPDEF;
-        }
-
-        public String getSPD() {
-            return mSPD;
-        }
     }
 
 }
