@@ -55,6 +55,7 @@ class DetailPresenter
     void refreshData(Integer number) {
         if(number == null || number <= 0) {
             mView.abort();
+            return;
         }
 
         Observable<Pokemon> pokemon = mPokemonService.getPokemon(String.valueOf(number));

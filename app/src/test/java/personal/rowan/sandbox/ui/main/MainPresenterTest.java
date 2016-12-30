@@ -29,13 +29,17 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class MainPresenterTest {
 
-    @Rule public final ImmediateSchedulersRule immediateSchedulersRule = new ImmediateSchedulersRule();
+    @Rule
+    public final ImmediateSchedulersRule immediateSchedulersRule = new ImmediateSchedulersRule();
 
     private MainPresenter mPresenter;
 
-    @Mock private MainView mView;
-    @Mock private PokemonService mPokemonService;
-    @Mock private MainRealmManager mRealmManager;
+    @Mock
+    private MainView mView;
+    @Mock
+    private PokemonService mPokemonService;
+    @Mock
+    private MainRealmManager mRealmManager;
 
     @Before
     public void before() {
