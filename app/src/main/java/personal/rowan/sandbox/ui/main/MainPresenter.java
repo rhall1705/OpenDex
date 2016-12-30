@@ -1,5 +1,7 @@
 package personal.rowan.sandbox.ui.main;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.jakewharton.rxbinding.support.v7.widget.RecyclerViewScrollEvent;
 
 import java.util.ArrayList;
@@ -39,10 +41,11 @@ class MainPresenter
     }
 
     void clearAndRefreshData() {
-        refreshData(0, true);
+        refreshData(null, true);
     }
 
-    private void refreshData(Integer offset) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    void refreshData(Integer offset) {
         refreshData(offset, false);
     }
 

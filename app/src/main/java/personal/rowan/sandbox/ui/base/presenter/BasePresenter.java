@@ -1,5 +1,7 @@
 package personal.rowan.sandbox.ui.base.presenter;
 
+import android.support.annotation.VisibleForTesting;
+
 import personal.rowan.sandbox.util.NullObject;
 
 /**
@@ -15,7 +17,8 @@ public abstract class BasePresenter<V> {
         mViewClazz = viewClazz;
     }
 
-    void attach(V view) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    public void attach(V view) {
         mView = view;
         publish();
     }
