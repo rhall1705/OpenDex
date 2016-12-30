@@ -14,7 +14,7 @@ public class MainRealmManager {
     private Realm mRealm;
 
     @Inject
-    public MainRealmManager(Realm realm) {
+    MainRealmManager(Realm realm) {
         mRealm = realm;
     }
 
