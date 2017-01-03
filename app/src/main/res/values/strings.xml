@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pokedex</string>
+    <string name="app_name">OpenDex</string>
 
     <string name="activity_main_title">Pokemon List</string>
     <string name="activity_main_model_content_description">The image for the Pokemon</string>
