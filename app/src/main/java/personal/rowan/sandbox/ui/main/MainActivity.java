@@ -119,6 +119,16 @@ public class MainActivity
     }
 
     @Override
+    public void showPaginationProgress() {
+        mBinding.activityMainPaginationPb.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hidePaginationProgress() {
+        mBinding.activityMainPaginationPb.setVisibility(View.GONE);
+    }
+
+    @Override
     public boolean onItemClick(BaseRecyclerViewAdapter adapter, BaseViewHolder holder, View adapterView, int position) {
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 ((MainListViewHolder) holder).getModelView(),

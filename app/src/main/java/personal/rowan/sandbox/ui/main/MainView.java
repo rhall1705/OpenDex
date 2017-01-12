@@ -22,4 +22,8 @@ interface MainView {
 
     void hideProgress();
 
+    void showPaginationProgress();
+
+    void hidePaginationProgress();
+
 }

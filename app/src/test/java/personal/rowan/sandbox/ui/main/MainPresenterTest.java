@@ -59,6 +59,7 @@ public class MainPresenterTest {
         verify(mPokemonService, times(1)).getPokemonList(anyObject());
         verify(mRealmManager).update(dataSet);
         verify(mView).displayPokemonList(dataSet);
+        verify(mView).hidePaginationProgress();
         verify(mView).hideProgress();
     }
 
@@ -72,6 +73,7 @@ public class MainPresenterTest {
         verify(mPokemonService, times(2)).getPokemonList(null);
         verify(mRealmManager).update(anyObject());
         verify(mView).displayPokemonList(anyObject());
+        verify(mView).hidePaginationProgress();
         verify(mView).hideProgress();
     }
 

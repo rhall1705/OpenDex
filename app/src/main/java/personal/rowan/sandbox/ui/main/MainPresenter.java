@@ -74,6 +74,7 @@ class MainPresenter
                     public void onCompleted() {
                         if(mView != null) {
                             mView.hideProgress();
+                            mView.hidePaginationProgress();
                         }
                     }
 
@@ -112,7 +113,7 @@ class MainPresenter
                     if(mView.shouldPaginate() &&
                             !isApiSubscriptionActive()
                             && mResult.size() < mCount) {
-                        mView.showProgress();
+                        mView.showPaginationProgress();
                         refreshData(mResult.size());
                     }
                 })
